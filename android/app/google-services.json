@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "359361727525",
+    "firebase_url": "https://isolation-fun.firebaseio.com",
+    "project_id": "isolation-fun",
+    "storage_bucket": "isolation-fun.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:359361727525:android:50c34f32fa0994449103cc",
+        "android_client_info": {
+          "package_name": "com.datamine.isolation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "359361727525-nn0eiog1v3gntoldpuslk7f0u4tsemlj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.datamine.isolation",
+            "certificate_hash": "47e56b94e43c2e1a5d629d48859f25008b3b1f07"
+          }
+        },
+        {
+          "client_id": "359361727525-brt1g9td09jg3pqm38pv38lps51pdgsm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARQnXYIjC9rwzx32gAD2I0hryPEJW5wbw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "359361727525-brt1g9td09jg3pqm38pv38lps51pdgsm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

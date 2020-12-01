@@ -6,10 +6,10 @@ import 'package:flutter/services.dart';
 import 'package:isolation/View_Model/sign_in_view_model.dart';
 import 'package:isolation/base/base_view.dart';
 import 'package:isolation/splash.dart';
+import 'package:isolation/utils/auth.dart';
 import 'package:isolation/utils/routeNames.dart';
 import 'package:isolation/utils/util.dart';
 import 'package:isolation/utils/view_state.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -18,9 +18,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   GlobalKey<FormState> _userLoginFormKey = GlobalKey();
+  final Auth _auth = Auth();
   User _user;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   bool isSignIn = false;
   bool google = false;
@@ -190,8 +189,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                               ],
                                             ))),
                                         onTap: () async {
-                                          signInWithGoogle(model)
+                                          model.state = ViewState.Busy;
+                                          _auth
+                                              .signInWithGoogle()
                                               .then((User user) {
+                                            model.state = ViewState.Idle;
                                             model.clearAllModels();
                                             Navigator.of(context)
                                                 .pushNamedAndRemoveUntil(
@@ -226,38 +228,5 @@ class _LoginScreenState extends State<LoginScreen> {
             },
           );
         });
-  }
-
-  Future<User> signInWithGoogle(SignInViewModel model) async {
-    model.state = ViewState.Busy;
-
-    GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
-
-    GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
-
-    AuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleSignInAuthentication.accessToken,
-      idToken: googleSignInAuthentication.idToken,
-    );
-
-    UserCredential authResult = await _auth.signInWithCredential(credential);
-
-    _user = authResult.user;
-
-    assert(!_user.isAnonymous);
-
-    assert(await _user.getIdToken() != null);
-
-    User currentUser = _auth.currentUser;
-
-    assert(_user.uid == currentUser.uid);
-
-    model.state = ViewState.Idle;
-
-    print("User Name: ${_user.displayName}");
-    print("User Email ${_user.email}");
-
-    return currentUser;
   }
 }

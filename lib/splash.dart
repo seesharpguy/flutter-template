@@ -2,9 +2,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:isolation/View_Model/sign_in_view_model.dart';
 import 'package:isolation/utils/deviceSize.dart';
+import 'package:isolation/utils/auth.dart';
 import 'package:isolation/login_screen.dart';
+import 'package:isolation/home_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Splash extends StatefulWidget {
   @override
@@ -19,14 +20,18 @@ class VideoState extends State<Splash> with SingleTickerProviderStateMixin {
   AnimationController animationController;
   Animation<double> animation;
 
+  final Auth _auth = Auth();
+
   startTime() async {
     var _duration = new Duration(seconds: 3);
     return new Timer(_duration, navigationPage);
   }
 
-  void navigationPage() {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => LoginScreen()));
+  void navigationPage() async {
+    final bool isLogged = await _auth.isLoggedIn();
+
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => isLogged ? HomeScreen() : LoginScreen()));
   }
 
   @override

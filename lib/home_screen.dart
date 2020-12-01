@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:isolation/login_screen.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:isolation/utils/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -8,11 +9,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final Auth _auth = Auth();
 
   void signOutGoogle() async {
-    await _googleSignIn.signOut();
+    await _auth.logout();
     print("User Sign Out");
+  }
+
+  String avatarUrl() {
+    return _auth.getAvatarUrl();
   }
 
   @override
@@ -35,9 +40,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(height: 40),
-                Image.asset(
-                  "assets/girl.jpg",
-                  scale: 5,
+                CircleAvatar(
+                  backgroundImage: NetworkImage(avatarUrl()),
+                  radius: 100,
                 ),
                 SizedBox(height: 40),
                 RaisedButton(

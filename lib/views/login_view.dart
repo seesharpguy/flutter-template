@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:isolation/View_Model/sign_in_view_model.dart';
+import 'package:isolation/models/signin_model.dart';
 import 'package:isolation/base/base_view.dart';
 import 'package:isolation/splash.dart';
 import 'package:isolation/utils/auth.dart';

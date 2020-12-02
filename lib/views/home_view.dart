@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:isolation/login_screen.dart';
+import 'package:isolation/views/login_view.dart';
 import 'package:isolation/utils/auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -20,6 +19,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return _auth.getAvatarUrl();
   }
 
+  String displayName() {
+    return _auth.displayName();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -32,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 Center(
                   child: Text(
-                    'Welcome User',
+                    'Welcome ${displayName()}',
                     style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,

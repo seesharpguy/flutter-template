@@ -15,10 +15,40 @@ class Auth {
     }
   }
 
-  Future<User> currentUser() async {
+  Future<User> currentUserAsync() async {
     try {
       User user = _firebaseAuth.currentUser;
       return user;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  User currentUser() {
+    try {
+      User user = _firebaseAuth.currentUser;
+      return user;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  Future<String> displayNameAsync() async {
+    try {
+      User user = _firebaseAuth.currentUser;
+      return user.displayName;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  String displayName() {
+    try {
+      User user = _firebaseAuth.currentUser;
+      return user.displayName;
     } catch (e) {
       print(e);
       return null;

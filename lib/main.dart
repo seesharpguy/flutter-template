@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:isolation/View_Model/home_view_model.dart';
-import 'package:isolation/View_Model/sign_in_view_model.dart';
+import 'package:isolation/models/home_model.dart';
+import 'package:isolation/models/signin_model.dart';
 import 'package:isolation/utils/locator.dart';
 import 'package:isolation/utils/prefer.dart';
 import 'package:isolation/utils/routes.dart';
@@ -38,9 +38,6 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    print('initState()');
-
-    //MyApp.setLocale(context, locale);
   }
 
   @override

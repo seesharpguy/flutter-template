@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:isolation/home_screen.dart';
-import 'package:isolation/login_screen.dart';
+import 'package:isolation/views/home_view.dart';
+import 'package:isolation/views/login_view.dart';
 import 'package:isolation/splash.dart';
 import 'package:isolation/utils/routeNames.dart';
 

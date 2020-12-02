@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:isolation/View_Model/sign_in_view_model.dart';
+import 'package:isolation/models/signin_model.dart';
 import 'package:isolation/utils/deviceSize.dart';
 import 'package:isolation/utils/auth.dart';
-import 'package:isolation/login_screen.dart';
-import 'package:isolation/home_screen.dart';
+import 'package:isolation/views/login_view.dart';
+import 'package:isolation/views/home_view.dart';
 import 'package:provider/provider.dart';
 
 class Splash extends StatefulWidget {
@@ -73,8 +73,8 @@ class VideoState extends State<Splash> with SingleTickerProviderStateMixin {
                   Padding(
                       padding: EdgeInsets.only(bottom: 30.0),
                       child: new Image.asset(
-                        'assets/powered_by.png',
-                        height: 25.0,
+                        'assets/powered_by_dm.png',
+                        height: 100.0,
                         fit: BoxFit.scaleDown,
                       ))
                 ],

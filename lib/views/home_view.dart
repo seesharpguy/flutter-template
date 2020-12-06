@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:isolation/views/login_view.dart';
+import 'package:isolation/views/vote_view.dart';
 import 'package:isolation/utils/auth.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -35,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 Center(
                   child: Text(
-                    'Welcome ${displayName()}',
+                    'Hello ${displayName()}',
                     style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
@@ -60,7 +61,45 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      'Sign Out',
+                      'Bye Bye',
+                      style: TextStyle(fontSize: 25, color: Colors.white),
+                    ),
+                  ),
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40)),
+                ),
+                RaisedButton(
+                  onPressed: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return BabyNames();
+                    }));
+                  },
+                  color: Colors.black,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Vote on Baby Name',
+                      style: TextStyle(fontSize: 25, color: Colors.white),
+                    ),
+                  ),
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40)),
+                ),
+                RaisedButton(
+                  onPressed: () {
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return BabyNames();
+                    }));
+                  },
+                  color: Colors.black,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Start New Game',
                       style: TextStyle(fontSize: 25, color: Colors.white),
                     ),
                   ),

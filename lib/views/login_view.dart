@@ -189,18 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               ],
                                             ))),
                                         onTap: () async {
-                                          model.state = ViewState.Busy;
-                                          _auth
-                                              .signInWithGoogle()
-                                              .then((User user) {
-                                            model.state = ViewState.Idle;
-                                            model.clearAllModels();
-                                            Navigator.of(context)
-                                                .pushNamedAndRemoveUntil(
-                                                    RouteName.Home,
-                                                    (Route<dynamic> route) =>
-                                                        false);
-                                          }).catchError((e) => print(e));
+                                          model.loginWithGoogle();
                                         },
                                       ),
                                       SizedBox(

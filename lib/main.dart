@@ -7,12 +7,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:jibe/models/home_model.dart';
 import 'package:jibe/models/signin_model.dart';
+import 'package:jibe/utils/navigation_service.dart';
+import 'package:get_it/get_it.dart';
 import 'package:jibe/utils/locator.dart';
 import 'package:jibe/utils/prefer.dart';
 import 'package:jibe/utils/routes.dart';
 import 'package:provider/provider.dart';
 import 'dart:io' show Platform;
 
+GetIt locator = GetIt.instance;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -38,7 +41,7 @@ void main() async {
   Prefs.init();
   setLocator();
   runApp(MultiProvider(
-    child: MyApp(),
+    child: JibeApp(),
     providers: [
       ChangeNotifierProvider<HomeViewModel>(
         create: (_) => HomeViewModel(),
@@ -47,14 +50,14 @@ void main() async {
   ));
 }
 
-class MyApp extends StatefulWidget {
+class JibeApp extends StatefulWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
-  _MyAppState createState() => _MyAppState();
+  _JibeAppState createState() => _JibeAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _JibeAppState extends State<JibeApp> {
   Locale locale;
   bool localeLoaded = false;
 
@@ -80,6 +83,7 @@ class _MyAppState extends State<MyApp> {
       child: Center(
         child: MaterialApp(
           initialRoute: '/',
+          navigatorKey: locator<NavigationService>().navigatorKey,
           debugShowCheckedModeBanner: false,
           onGenerateRoute: Routes.onGenerateRoute,
           theme: ThemeData(

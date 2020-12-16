@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:jibe/base/base_model.dart';
+import 'package:jibe/utils/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:jibe/utils/view_state.dart';
+import 'package:jibe/utils/navigation_service.dart';
+import 'package:jibe/utils/routeNames.dart';
+import 'package:get_it/get_it.dart';
+
+GetIt locator = GetIt.instance;
 
 class SignInViewModel extends BaseModel {
+  final Auth _auth = Auth();
+  final NavigationService _navigationService = locator<NavigationService>();
+  User _user;
+
   bool _userLoginAutoValidate = false;
 
   TextEditingController _passwordController = TextEditingController();
@@ -35,6 +47,15 @@ class SignInViewModel extends BaseModel {
   set userLoginAutoValidate(bool value) {
     _userLoginAutoValidate = value;
     notifyListeners();
+  }
+
+  void loginWithGoogle() async {
+    state = ViewState.Busy;
+    _auth.signInWithGoogle().then((User user) {
+      state = ViewState.Idle;
+      clearAllModels();
+      _navigationService.navigateTo(RouteName.Home);
+    }).catchError((e) => print(e));
   }
 
   clearAllModels() {

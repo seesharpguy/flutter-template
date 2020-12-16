@@ -30,21 +30,43 @@ class _LobbyState extends State<Lobby> {
   }
 
   Widget _buildBody(BuildContext context, LobbyViewModel viewModel) {
-    // return _buildList(context, dummySnapshot);
+    // return _buildList(context, viewModel);
 
-    // return StreamBuilder<QuerySnapshot>(
-    //   stream: FirebaseFirestore.instance
-    //       .collection('jibe_nonprod')
-    //       .doc("1F4DK2KH")
-    //       .collection("players")
-    //       .snapshots(),
-    //   builder: (context, snapshot) {
-    //     if (!snapshot.hasData) return LinearProgressIndicator();
+    return GridView.count(
+      primary: true,
+      crossAxisCount: 2,
+      childAspectRatio: 1.5,
+      children: List.generate(viewModel.players.length, (index) {
+        return getStructuredGridCell(viewModel.players[index]);
+      }),
+    );
+  }
 
-    //   },
-    // );
-
-    return _buildList(context, viewModel);
+  Column getStructuredGridCell(Player player) {
+    return new Column(children: [
+      Card(
+          elevation: 2,
+          child: new Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            verticalDirection: VerticalDirection.down,
+            children: <Widget>[
+              CircleAvatar(
+                backgroundImage: NetworkImage(player.avatar),
+                radius: 50,
+              ),
+              new Padding(
+                padding: EdgeInsets.only(left: 10.0),
+                child: new Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Center(child: new Text(player.displayName))
+                  ],
+                ),
+              )
+            ],
+          ))
+    ]);
   }
 
   Widget _buildList(BuildContext context, LobbyViewModel viewModel) {

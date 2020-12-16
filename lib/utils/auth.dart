@@ -77,7 +77,6 @@ class Auth {
           url = photoUrl;
         }
       }
-      print(url);
       return url;
     } catch (e) {
       return url;
@@ -107,9 +106,6 @@ class Auth {
     User currentUser = _firebaseAuth.currentUser;
 
     assert(_user.uid == currentUser.uid);
-
-    print("User Name: ${_user.displayName}");
-    print("User Email ${_user.email}");
 
     return currentUser;
   }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:isolation/views/home_view.dart';
-import 'package:isolation/views/login_view.dart';
-import 'package:isolation/splash.dart';
-import 'package:isolation/utils/routeNames.dart';
+import 'package:jibe/views/home_view.dart';
+import 'package:jibe/views/login_view.dart';
+import 'package:jibe/splash.dart';
+import 'package:jibe/utils/routeNames.dart';
 
 class Routes {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {

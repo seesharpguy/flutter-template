@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:isolation/base/base_model.dart';
+import 'package:jibe/base/base_model.dart';
 
 class SignInViewModel extends BaseModel {
   bool _userLoginAutoValidate = false;

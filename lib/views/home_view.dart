@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:isolation/views/login_view.dart';
-import 'package:isolation/views/vote_view.dart';
-import 'package:isolation/utils/auth.dart';
+import 'package:jibe/views/login_view.dart';
+import 'package:jibe/views/lobby.dart';
+import 'package:jibe/utils/auth.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressed: () {
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
-                      return BabyNames();
+                      return Lobby();
                     }));
                   },
                   color: Colors.black,
@@ -92,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressed: () {
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) {
-                      return BabyNames();
+                      return Lobby();
                     }));
                   },
                   color: Colors.black,

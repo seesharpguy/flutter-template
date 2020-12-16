@@ -3,13 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:isolation/models/signin_model.dart';
-import 'package:isolation/base/base_view.dart';
-import 'package:isolation/splash.dart';
-import 'package:isolation/utils/auth.dart';
-import 'package:isolation/utils/routeNames.dart';
-import 'package:isolation/utils/util.dart';
-import 'package:isolation/utils/view_state.dart';
+import 'package:jibe/models/signin_model.dart';
+import 'package:jibe/base/base_view.dart';
+import 'package:jibe/splash.dart';
+import 'package:jibe/utils/auth.dart';
+import 'package:jibe/utils/routeNames.dart';
+import 'package:jibe/utils/util.dart';
+import 'package:jibe/utils/view_state.dart';
 
 class LoginScreen extends StatefulWidget {
   @override

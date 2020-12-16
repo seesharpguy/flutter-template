@@ -1,4 +1,4 @@
-# isolation
+# jibe
 
 A new Flutter project.
 

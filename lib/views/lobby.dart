@@ -1,14 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
-class BabyNames extends StatefulWidget {
+class Lobby extends StatefulWidget {
   @override
-  _BabyNamesState createState() {
-    return _BabyNamesState();
+  _LobbyState createState() {
+    return _LobbyState();
   }
 }
 
-class _BabyNamesState extends State<BabyNames> {
+class _LobbyState extends State<Lobby> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,6 +20,7 @@ class _BabyNamesState extends State<BabyNames> {
 
   Widget _buildBody(BuildContext context) {
     // return _buildList(context, dummySnapshot);
+
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance.collection('baby').snapshots(),
       builder: (context, snapshot) {

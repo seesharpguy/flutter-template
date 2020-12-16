@@ -8,7 +8,13 @@
             "name": "Flutter",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "debug"
+            "flutterMode": "debug",
+            "args": [
+                "--dart-define",
+                "FUNCTION_BASE=http://localhost:5001/isolation-fun/us-central1/",
+                "--dart-define",
+                "ROOT_COLLECTION=jibe_nonprod"
+            ]
           }
     ]
 }

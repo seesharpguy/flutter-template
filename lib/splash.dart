@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:isolation/models/signin_model.dart';
-import 'package:isolation/utils/deviceSize.dart';
-import 'package:isolation/utils/auth.dart';
-import 'package:isolation/views/login_view.dart';
-import 'package:isolation/views/home_view.dart';
+import 'package:jibe/models/signin_model.dart';
+import 'package:jibe/utils/deviceSize.dart';
+import 'package:jibe/utils/auth.dart';
+import 'package:jibe/views/login_view.dart';
+import 'package:jibe/views/home_view.dart';
 import 'package:provider/provider.dart';
 
 class Splash extends StatefulWidget {
@@ -73,7 +73,7 @@ class VideoState extends State<Splash> with SingleTickerProviderStateMixin {
                   Padding(
                       padding: EdgeInsets.only(bottom: 30.0),
                       child: new Image.asset(
-                        'assets/powered_by_dm.png',
+                        'assets/pb_g8.png',
                         height: 100.0,
                         fit: BoxFit.scaleDown,
                       ))
@@ -83,7 +83,7 @@ class VideoState extends State<Splash> with SingleTickerProviderStateMixin {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   new Image.asset(
-                    'assets/devs.jpg',
+                    'assets/jibe.png',
                     width: animation.value * 250,
                     height: animation.value * 250,
                   ),

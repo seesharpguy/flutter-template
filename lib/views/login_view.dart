@@ -1,13 +1,10 @@
 import 'dart:ui';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:jibe/models/signin_model.dart';
+import 'package:jibe/viewmodels/signin_viewmodel.dart';
 import 'package:jibe/base/base_view.dart';
 import 'package:jibe/splash.dart';
-import 'package:jibe/utils/auth.dart';
-import 'package:jibe/utils/routeNames.dart';
 import 'package:jibe/utils/util.dart';
 import 'package:jibe/utils/view_state.dart';
 
@@ -18,8 +15,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   GlobalKey<FormState> _userLoginFormKey = GlobalKey();
-  final Auth _auth = Auth();
-  User _user;
 
   bool isSignIn = false;
   bool google = false;

@@ -1,13 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:jibe/models/home_model.dart';
-import 'package:jibe/models/signin_model.dart';
-import 'package:jibe/utils/navigation_service.dart';
+import 'package:jibe/viewmodels/home_viewmodel.dart';
+import 'package:jibe/viewmodels/signin_viewmodel.dart';
+import 'package:jibe/services/navigation_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:jibe/utils/locator.dart';
 import 'package:jibe/utils/prefer.dart';
@@ -21,8 +20,8 @@ void main() async {
   await Firebase.initializeApp();
 
   if (kDebugMode) {
-    print('Running in debug mode so pointing to local emulator');
-
+    print(
+        'Running in debug mode on ${Platform.isAndroid} so pointing to local emulator');
     if (Platform.isAndroid) {
       FirebaseFirestore.instance.settings =
           Settings(host: '10.0.2.2:8083', sslEnabled: false);
@@ -51,8 +50,6 @@ void main() async {
 }
 
 class JibeApp extends StatefulWidget {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
   @override
   _JibeAppState createState() => _JibeAppState();
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jibe/views/home_view.dart';
 import 'package:jibe/views/login_view.dart';
+import 'package:jibe/views/lobby_view.dart';
 import 'package:jibe/splash.dart';
 import 'package:jibe/utils/routeNames.dart';
 
@@ -13,6 +14,9 @@ class Routes {
         return MaterialPageRoute(builder: (_) => LoginScreen());
       case RouteName.Home:
         return MaterialPageRoute(builder: (_) => HomeScreen());
+      case RouteName.Lobby:
+        var gameId = settings.arguments as String;
+        return MaterialPageRoute(builder: (_) => Lobby(gameId: gameId));
       default:
         return MaterialPageRoute(
           builder: (context) => Scaffold(

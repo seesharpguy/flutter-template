@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:jibe/views/login_view.dart';
-import 'package:jibe/views/lobby.dart';
+import 'package:jibe/views/lobby_view.dart';
 import 'package:jibe/utils/auth.dart';
+import 'package:jibe/base/base_view.dart';
+import 'package:jibe/viewmodels/home_viewmodel.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -9,7 +11,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final Auth _auth = Auth();
+  final AuthenticationService _auth = AuthenticationService();
 
   void signOutGoogle() async {
     await _auth.logout();
@@ -26,92 +28,93 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(48.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Center(
-                  child: Text(
-                    'Hello ${displayName()}',
-                    style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black54),
+    return BaseView<HomeViewModel>(
+        onModelReady: (model) {},
+        builder: (context, model, build) {
+          return SafeArea(
+            child: Scaffold(
+              body: Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(48.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Center(
+                        child: Text(
+                          'Hello ${displayName()}',
+                          style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black54),
+                        ),
+                      ),
+                      SizedBox(height: 40),
+                      CircleAvatar(
+                        backgroundImage: NetworkImage(avatarUrl()),
+                        radius: 100,
+                      ),
+                      SizedBox(height: 40),
+                      RaisedButton(
+                        onPressed: () {
+                          signOutGoogle();
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(builder: (context) {
+                            return LoginScreen();
+                          }), ModalRoute.withName('/'));
+                        },
+                        color: Colors.black,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Log Out',
+                            style: TextStyle(fontSize: 25, color: Colors.white),
+                          ),
+                        ),
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(40)),
+                      ),
+                      RaisedButton(
+                        onPressed: () {
+                          model.createGame();
+                        },
+                        color: Colors.black,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Create New Game',
+                            style: TextStyle(fontSize: 25, color: Colors.white),
+                          ),
+                        ),
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(40)),
+                      ),
+                      RaisedButton(
+                        onPressed: () {
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (context) {
+                            return Lobby();
+                          }));
+                        },
+                        color: Colors.black,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Join A Game',
+                            style: TextStyle(fontSize: 25, color: Colors.white),
+                          ),
+                        ),
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(40)),
+                      )
+                    ],
                   ),
                 ),
-                SizedBox(height: 40),
-                CircleAvatar(
-                  backgroundImage: NetworkImage(avatarUrl()),
-                  radius: 100,
-                ),
-                SizedBox(height: 40),
-                RaisedButton(
-                  onPressed: () {
-                    signOutGoogle();
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) {
-                      return LoginScreen();
-                    }), ModalRoute.withName('/'));
-                  },
-                  color: Colors.black,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Bye Bye',
-                      style: TextStyle(fontSize: 25, color: Colors.white),
-                    ),
-                  ),
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40)),
-                ),
-                RaisedButton(
-                  onPressed: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return Lobby();
-                    }));
-                  },
-                  color: Colors.black,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Vote on Baby Name',
-                      style: TextStyle(fontSize: 25, color: Colors.white),
-                    ),
-                  ),
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40)),
-                ),
-                RaisedButton(
-                  onPressed: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return Lobby();
-                    }));
-                  },
-                  color: Colors.black,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Start New Game',
-                      style: TextStyle(fontSize: 25, color: Colors.white),
-                    ),
-                  ),
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40)),
-                )
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
-    );
+          );
+        });
   }
 }

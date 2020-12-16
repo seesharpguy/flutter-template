@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:jibe/models/signin_model.dart';
+import 'package:jibe/viewmodels/signin_viewmodel.dart';
 import 'package:jibe/utils/deviceSize.dart';
 import 'package:jibe/utils/auth.dart';
 import 'package:jibe/views/login_view.dart';
@@ -20,7 +20,7 @@ class VideoState extends State<Splash> with SingleTickerProviderStateMixin {
   AnimationController animationController;
   Animation<double> animation;
 
-  final Auth _auth = Auth();
+  final AuthenticationService _auth = AuthenticationService();
 
   startTime() async {
     var _duration = new Duration(seconds: 3);

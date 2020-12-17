@@ -43,48 +43,41 @@ class _LoginScreenState extends State<LoginScreen> {
                     SingleChildScrollView(
                       child: Column(
                         children: <Widget>[
+                          SizedBox(height: deviceSize.height / 2.4),
                           Container(
-                              height: deviceSize.height / 2.4,
-                              width: deviceSize.width / 3),
-                          Container(
-                            child: Form(
-                              key: _userLoginFormKey,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 5.0, bottom: 15, left: 10, right: 10),
-                                child: Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(20.0)),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.all(15.0),
-                                        child: Text(
-                                          "jibe",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w800,
-                                              fontSize: 25),
-                                        ),
+                            width: deviceSize.width,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 5.0, bottom: 15, left: 10, right: 10),
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0)),
+                                child: Column(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: Text(
+                                        "jibe",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 25),
                                       ),
-                                      Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 15.0,
-                                              right: 14,
-                                              left: 14,
-                                              bottom: 8),
-                                          child:
-                                              GoogleButton(onPressed: () async {
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: SignInWithGoogle(
+                                          buttonColor: Colors.grey[900],
+                                          onPressed: () async {
                                             model.loginWithGoogle();
-                                          })),
-                                      SizedBox(
-                                        height: 16,
-                                      ),
-                                      SizedBox(
-                                        height: 16,
-                                      ),
-                                    ],
-                                  ),
+                                          }),
+                                    ),
+                                    SizedBox(
+                                      height: 16,
+                                    ),
+                                    SizedBox(
+                                      height: 16,
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),

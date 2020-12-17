@@ -4,6 +4,9 @@ import 'package:jibe/views/lobby_view.dart';
 import 'package:jibe/utils/auth.dart';
 import 'package:jibe/base/base_view.dart';
 import 'package:jibe/viewmodels/home_viewmodel.dart';
+import 'package:avatar_glow/avatar_glow.dart';
+import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -49,12 +52,51 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       SizedBox(height: 40),
-                      CircleAvatar(
-                        backgroundImage: NetworkImage(avatarUrl()),
-                        radius: 100,
+                      AvatarGlow(
+                        glowColor: Colors.grey[800],
+                        endRadius: 150.0,
+                        duration: Duration(milliseconds: 2000),
+                        repeat: true,
+                        showTwoGlows: true,
+                        repeatPauseDuration: Duration(milliseconds: 100),
+                        child: Material(
+                          elevation: 8.0,
+                          shape: CircleBorder(),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.grey[100],
+                            backgroundImage: NetworkImage(
+                              avatarUrl(),
+                            ),
+                            radius: 60.0,
+                          ),
+                        ),
                       ),
                       SizedBox(height: 40),
-                      RaisedButton(
+                      RoundedButtonWithIcon(
+                        icon: FontAwesomeIcons.playCircle,
+                        title: "               Start New Game",
+                        buttonColor: Colors.grey[900],
+                        onPressed: () {
+                          model.createGame();
+                        },
+                      ),
+                      SizedBox(height: 10),
+                      RoundedButtonWithIcon(
+                        icon: FontAwesomeIcons.userPlus,
+                        title: "             Join Existing Game",
+                        buttonColor: Colors.grey[900],
+                        onPressed: () {
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(builder: (context) {
+                            return Lobby();
+                          }));
+                        },
+                      ),
+                      SizedBox(height: 10),
+                      RoundedButtonWithIcon(
+                        icon: FontAwesomeIcons.signOutAlt,
+                        title: "                       Log Out",
+                        buttonColor: Colors.grey[900],
                         onPressed: () {
                           signOutGoogle();
                           Navigator.of(context).pushAndRemoveUntil(
@@ -62,53 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             return LoginScreen();
                           }), ModalRoute.withName('/'));
                         },
-                        color: Colors.black,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Log Out',
-                            style: TextStyle(fontSize: 25, color: Colors.white),
-                          ),
-                        ),
-                        elevation: 5,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40)),
                       ),
-                      RaisedButton(
-                        onPressed: () {
-                          model.createGame();
-                        },
-                        color: Colors.black,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Create New Game',
-                            style: TextStyle(fontSize: 25, color: Colors.white),
-                          ),
-                        ),
-                        elevation: 5,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40)),
-                      ),
-                      RaisedButton(
-                        onPressed: () {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            return Lobby();
-                          }));
-                        },
-                        color: Colors.black,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            'Join A Game',
-                            style: TextStyle(fontSize: 25, color: Colors.white),
-                          ),
-                        ),
-                        elevation: 5,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40)),
-                      )
                     ],
                   ),
                 ),

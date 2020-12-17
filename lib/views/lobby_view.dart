@@ -4,10 +4,14 @@ import 'package:flutter/foundation.dart';
 import 'package:jibe/base/base_view.dart';
 import 'package:jibe/viewmodels/lobby_viewmodel.dart';
 import 'package:jibe/models/jibe_models.dart';
+import 'package:badges/badges.dart';
+import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Lobby extends StatefulWidget {
   final String gameId;
   const Lobby({Key key, this.gameId}) : super(key: key);
+
   @override
   _LobbyState createState() {
     return _LobbyState();
@@ -18,11 +22,13 @@ class _LobbyState extends State<Lobby> {
   @override
   Widget build(BuildContext context) {
     return BaseView<LobbyViewModel>(onModelReady: (model) {
-      model.listenToPosts();
+      model.gameId = widget.gameId;
+      model.loadGame();
+      model.listenForPlayers();
     }, builder: (context, model, build) {
       return SafeArea(
         child: Scaffold(
-          appBar: AppBar(title: Text('Game Lobby')),
+          appBar: AppBar(title: Center(child: Text('Game Lobby'))),
           body: _buildBody(context, model),
         ),
       );
@@ -30,27 +36,50 @@ class _LobbyState extends State<Lobby> {
   }
 
   Widget _buildBody(BuildContext context, LobbyViewModel viewModel) {
-    // return _buildList(context, viewModel);
+    return Padding(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          children: [
+            Expanded(child: _gridView(context, viewModel)),
+            RoundedButtonWithIcon(
+              icon: FontAwesomeIcons.thumbsUp,
+              title: "Begin Game".padLeft(45),
+              buttonColor: Colors.grey[900],
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return Lobby();
+                }));
+              },
+            ),
+          ],
+        ));
+  }
 
+  Widget _gridView(BuildContext context, LobbyViewModel viewModel) {
     return GridView.count(
       primary: true,
       crossAxisCount: 2,
-      childAspectRatio: 1.5,
-      children: List.generate(viewModel.players.length, (index) {
-        return getStructuredGridCell(viewModel.players[index]);
-      }),
+      childAspectRatio: 1.2,
+      children: viewModel.players != null && viewModel.players.length > 0
+          ? List.generate(viewModel.players.length, (index) {
+              return getStructuredGridCell(
+                  viewModel.players[index], viewModel.game);
+            })
+          : [LinearProgressIndicator()],
     );
   }
 
-  Column getStructuredGridCell(Player player) {
+  Column getStructuredGridCell(Player player, Game game) {
     return new Column(children: [
       Card(
-          elevation: 2,
+          elevation: 6,
           child: new Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
             verticalDirection: VerticalDirection.down,
             children: <Widget>[
+              _header(player, game),
               CircleAvatar(
                 backgroundImage: NetworkImage(player.avatar),
                 radius: 50,
@@ -106,6 +135,25 @@ class _LobbyState extends State<Lobby> {
             //   transaction.update(record.reference, {'votes': fresh.avatar});
             // }),
             ),
+      ),
+    );
+  }
+
+  Widget _header(Player player, Game game) {
+    return Padding(
+      padding: const EdgeInsets.all(1),
+      child: Badge(
+        padding: EdgeInsets.all(2),
+        badgeColor: Colors.white,
+        showBadge: player != null && game != null
+            ? player.userId == game.createdBy
+            : false,
+        badgeContent: Text(
+          '🥇',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        child: Text('Player ${player.playerNumber}'),
+        position: BadgePosition.bottomEnd(bottom: -2, end: -5),
       ),
     );
   }

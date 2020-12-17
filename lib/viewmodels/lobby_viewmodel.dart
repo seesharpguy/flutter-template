@@ -17,32 +17,38 @@ class LobbyViewModel extends BaseModel {
   List<Player> _players;
   List<Player> get players => _players;
 
-  void listenToPosts() {
+  String _gameId;
+  String get gameId => _gameId;
+  set gameId(String gameId) {
+    _gameId = gameId;
+    print('gameId set in lobby viewmodel with id: $gameId');
+    notifyListeners();
+  }
+
+  Game _game;
+  Game get game => _game;
+  set game(Game game) {
+    _game = game;
+    print(game.gameId);
+    notifyListeners();
+  }
+
+  void loadGame() async {
+    game = await _firestoreService.getGame(_gameId);
+  }
+
+  void listenForPlayers() {
     state = ViewState.Busy;
 
-    _firestoreService.gamePlayers("1F4DK2KH").listen((playerData) {
+    _firestoreService.gamePlayers(_gameId).listen((playerData) {
       List<Player> updatedPlayers = playerData;
-      if (updatedPlayers != null && updatedPlayers.length > 0) {
+      if (updatedPlayers != null) {
         _players = updatedPlayers;
         notifyListeners();
       }
 
       state = ViewState.Idle;
     });
-  }
-
-  Future<void> createGame() async {
-    User user = await _auth.currentUserAsync();
-    Future<HttpsCallableResult<dynamic>> callable = FirebaseFunctions.instance
-        .httpsCallable('createGame')
-        .call(<String, dynamic>{
-      "creator": {"displayName": user.displayName, "avatar": user.photoURL}
-    });
-
-    final results = await callable;
-    var data = results.data;
-    print(data['gameId']);
-    _navigationService.navigateTo(RouteName.Lobby, arguments: data['gameId']);
   }
 
   clearAllModels() {}

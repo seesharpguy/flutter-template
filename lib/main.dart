@@ -12,7 +12,7 @@ import 'package:jibe/utils/locator.dart';
 import 'package:jibe/utils/prefer.dart';
 import 'package:jibe/utils/routes.dart';
 import 'package:provider/provider.dart';
-import 'dart:io' show Platform;
+import 'dart:io' show Platform, exit;
 
 GetIt locator = GetIt.instance;
 void main() async {
@@ -39,6 +39,12 @@ void main() async {
 
   Prefs.init();
   setLocator();
+
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.dumpErrorToConsole(details);
+    if (kReleaseMode) exit(1);
+  };
+
   runApp(MultiProvider(
     child: JibeApp(),
     providers: [

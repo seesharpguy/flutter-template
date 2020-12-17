@@ -15,12 +15,15 @@ class HomeViewModel extends BaseModel {
     Future<HttpsCallableResult<dynamic>> callable = FirebaseFunctions.instance
         .httpsCallable('createGame')
         .call(<String, dynamic>{
-      "creator": {"displayName": user.displayName, "avatar": user.photoURL}
+      "creator": {
+        "displayName": user.displayName,
+        "avatar": user.photoURL,
+        "userId": user.uid
+      }
     });
 
     final results = await callable;
     var data = results.data;
-    print(data['gameId']);
     _navigationService.navigateTo(RouteName.Lobby, arguments: data['gameId']);
   }
 

@@ -41,17 +41,16 @@ class _LobbyState extends State<Lobby> {
         child: Column(
           children: [
             Expanded(child: _gridView(context, viewModel)),
-            RoundedButtonWithIcon(
-              icon: FontAwesomeIcons.thumbsUp,
-              title: "Begin Game".padLeft(45),
-              buttonColor: Colors.grey[900],
-              onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) {
-                  return Lobby();
-                }));
-              },
-            ),
+            viewModel.canBegin
+                ? RoundedButtonWithIcon(
+                    icon: FontAwesomeIcons.thumbsUp,
+                    title: "Begin Game".padLeft(45),
+                    buttonColor: Colors.grey[900],
+                    onPressed: () {
+                      viewModel.startGame();
+                    },
+                  )
+                : Text(''),
           ],
         ));
   }
@@ -96,47 +95,6 @@ class _LobbyState extends State<Lobby> {
             ],
           ))
     ]);
-  }
-
-  Widget _buildList(BuildContext context, LobbyViewModel viewModel) {
-    return ListView(
-        padding: const EdgeInsets.only(top: 20.0),
-        children: viewModel.players != null
-            ? viewModel.players
-                .map((data) => _buildListItem(context, data))
-                .toList()
-            : [
-                Center(
-                  child: CircularProgressIndicator(
-                    valueColor:
-                        AlwaysStoppedAnimation(Theme.of(context).primaryColor),
-                  ),
-                )
-              ]);
-  }
-
-  Widget _buildListItem(BuildContext context, Player data) {
-    return Padding(
-      key: ValueKey(data.documentId),
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(5.0),
-        ),
-        child: ListTile(
-            title: Text(data.displayName),
-            trailing: Text(data.avatar),
-            onTap: () => {}
-            //     FirebaseFirestore.instance.runTransaction((transaction) async {
-            //   final freshSnapshot = await transaction.get(record.reference);
-            //   final fresh = Record.fromSnapshot(freshSnapshot);
-
-            //   transaction.update(record.reference, {'votes': fresh.avatar});
-            // }),
-            ),
-      ),
-    );
   }
 
   Widget _header(Player player, Game game) {

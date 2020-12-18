@@ -2,10 +2,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:jibe/viewmodels/signin_viewmodel.dart';
 import 'package:jibe/utils/deviceSize.dart';
-import 'package:jibe/utils/auth.dart';
+import 'package:jibe/services/authentication_service.dart';
 import 'package:jibe/views/login_view.dart';
 import 'package:jibe/views/home_view.dart';
 import 'package:provider/provider.dart';
+import 'package:jibe/utils/locator.dart';
 
 class Splash extends StatefulWidget {
   @override
@@ -20,7 +21,7 @@ class VideoState extends State<Splash> with SingleTickerProviderStateMixin {
   AnimationController animationController;
   Animation<double> animation;
 
-  final AuthenticationService _auth = AuthenticationService();
+  final AuthenticationService _auth = locator<AuthenticationService>();
 
   startTime() async {
     var _duration = new Duration(seconds: 3);
@@ -28,10 +29,10 @@ class VideoState extends State<Splash> with SingleTickerProviderStateMixin {
   }
 
   void navigationPage() async {
-    final bool isLogged = await _auth.isLoggedIn();
+    final bool isLoggedIn = await _auth.isUserLoggedIn();
 
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => isLogged ? HomeScreen() : LoginScreen()));
+        builder: (context) => isLoggedIn ? HomeScreen() : LoginScreen()));
   }
 
   @override
@@ -71,7 +72,7 @@ class VideoState extends State<Splash> with SingleTickerProviderStateMixin {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Padding(
-                      padding: EdgeInsets.only(bottom: 0.0),
+                      padding: EdgeInsets.only(bottom: 250.0),
                       child: new Image.asset(
                         'assets/pb_g8.png',
                         height: 100.0,

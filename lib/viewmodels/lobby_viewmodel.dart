@@ -1,17 +1,13 @@
 import 'package:jibe/base/base_model.dart';
-import 'package:cloud_functions/cloud_functions.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:jibe/utils/locator.dart';
-import 'package:jibe/services/navigation_service.dart';
 import 'package:jibe/services/firestore_service.dart';
-import 'package:jibe/utils/routeNames.dart';
-import 'package:jibe/utils/auth.dart';
 import 'package:jibe/utils/view_state.dart';
 import 'package:jibe/models/jibe_models.dart';
+import 'package:jibe/services/authentication_service.dart';
 
 class LobbyViewModel extends BaseModel {
   final AuthenticationService _auth = locator<AuthenticationService>();
-  final NavigationService _navigationService = locator<NavigationService>();
+  // final NavigationService _navigationService = locator<NavigationService>();
   final FirestoreService _firestoreService = locator<FirestoreService>();
 
   List<Player> _players;
@@ -33,6 +29,11 @@ class LobbyViewModel extends BaseModel {
     notifyListeners();
   }
 
+  bool get canBegin =>
+      _players != null &&
+      _players.length > 1 &&
+      _game.createdBy == _auth.currentUser.uid;
+
   void loadGame() async {
     game = await _firestoreService.getGame(_gameId);
   }
@@ -49,6 +50,10 @@ class LobbyViewModel extends BaseModel {
 
       state = ViewState.Idle;
     });
+  }
+
+  void startGame() {
+    print('game started');
   }
 
   clearAllModels() {}

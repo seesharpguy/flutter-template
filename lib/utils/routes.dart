@@ -10,7 +10,7 @@ class Routes {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (context) => Splash());
-      case RouteName.USER_LOGIN:
+      case RouteName.Login:
         return MaterialPageRoute(builder: (_) => LoginScreen());
       case RouteName.Home:
         return MaterialPageRoute(builder: (_) => HomeScreen());

@@ -14,7 +14,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  GlobalKey<FormState> _userLoginFormKey = GlobalKey();
+  // GlobalKey<FormState> _userLoginFormKey = GlobalKey();
 
   bool isSignIn = false;
   bool google = false;

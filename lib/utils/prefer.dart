@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Prefs {
@@ -20,7 +17,7 @@ class Prefs {
 
   static bool _initCalled = false;
 
-  static const String USER_TYPE ='USER_TYPE';
+  static const String USER_TYPE = 'USER_TYPE';
 
   static Future<void> init() async {
     _initCalled = true;
@@ -36,9 +33,9 @@ class Prefs {
 
   static Set<String> getKeys() {
     assert(_initCalled,
-    "Prefs.init() must be called first in an initState() preferably!");
+        "Prefs.init() must be called first in an initState() preferably!");
     assert(_prefsInstance != null,
-    "Maybe call Prefs.getKeysF() instead. SharedPreferneces not ready yet!");
+        "Maybe call Prefs.getKeysF() instead. SharedPreferneces not ready yet!");
     return _prefsInstance.getKeys();
   }
 
@@ -55,9 +52,9 @@ class Prefs {
 
   static dynamic get(String key) {
     assert(_initCalled,
-    "Prefs.init() must be called first in an initState() preferably!");
+        "Prefs.init() must be called first in an initState() preferably!");
     assert(_prefsInstance != null,
-    "Maybe call Prefs.getKeysF() instead. SharedPreferneces not ready yet!");
+        "Maybe call Prefs.getKeysF() instead. SharedPreferneces not ready yet!");
     return _prefsInstance.get(key);
   }
 
@@ -75,9 +72,9 @@ class Prefs {
 
   static bool getBool(String key, [bool defValue]) {
     assert(_initCalled,
-    "Prefs.init() must be called first in an initState() preferably!");
+        "Prefs.init() must be called first in an initState() preferably!");
     assert(_prefsInstance != null,
-    "Maybe call Prefs.getKeysF() instead. SharedPreferneces not ready yet!");
+        "Maybe call Prefs.getKeysF() instead. SharedPreferneces not ready yet!");
 
     return _prefsInstance.getBool(key) ?? defValue ?? false;
   }
@@ -96,9 +93,9 @@ class Prefs {
 
   static int getInt(String key, [int defValue]) {
     assert(_initCalled,
-    "Prefs.init() must be called first in an initState() preferably!");
+        "Prefs.init() must be called first in an initState() preferably!");
     assert(_prefsInstance != null,
-    "Maybe call Prefs.getKeysF() instead. SharedPreferneces not ready yet!");
+        "Maybe call Prefs.getKeysF() instead. SharedPreferneces not ready yet!");
 
     return _prefsInstance.getInt(key) ?? defValue ?? 0;
   }
@@ -117,9 +114,9 @@ class Prefs {
 
   static double getDouble(String key, [double defValue]) {
     assert(_initCalled,
-    "Prefs.init() must be called first in an initState() preferably!");
+        "Prefs.init() must be called first in an initState() preferably!");
     assert(_prefsInstance != null,
-    "Maybe call Prefs.getKeysF() instead. SharedPreferneces not ready yet!");
+        "Maybe call Prefs.getKeysF() instead. SharedPreferneces not ready yet!");
 
     return _prefsInstance.getDouble(key) ?? defValue ?? 0.0;
   }
@@ -138,9 +135,9 @@ class Prefs {
 
   static String getString(String key, [String defValue]) {
     assert(_initCalled,
-    "Prefs.init() must be called first in an initState() preferably!");
+        "Prefs.init() must be called first in an initState() preferably!");
     assert(_prefsInstance != null,
-    "Maybe call Prefs.getKeysF() instead. SharedPreferneces not ready yet!");
+        "Maybe call Prefs.getKeysF() instead. SharedPreferneces not ready yet!");
 
     return _prefsInstance.getString(key) ?? defValue ?? "";
   }
@@ -159,9 +156,9 @@ class Prefs {
 
   static List<String> getStringList(String key, [List<String> defValue]) {
     assert(_initCalled,
-    "Prefs.init() must be called first in an initState() preferably!");
+        "Prefs.init() must be called first in an initState() preferably!");
     assert(_prefsInstance != null,
-    "Maybe call Prefs.getKeysF() instead. SharedPreferneces not ready yet!");
+        "Maybe call Prefs.getKeysF() instead. SharedPreferneces not ready yet!");
 
     return _prefsInstance.getStringList(key) ?? defValue ?? [""];
   }
@@ -230,9 +227,9 @@ class Prefs {
 
   static String getLanguageCode([String defValue]) {
     assert(_initCalled,
-    "Prefs.init() must be called first in an initState() preferably!");
+        "Prefs.init() must be called first in an initState() preferably!");
     assert(_prefsInstance != null,
-    "Maybe call Prefs.getKeysF() instead. SharedPreferneces not ready yet!");
+        "Maybe call Prefs.getKeysF() instead. SharedPreferneces not ready yet!");
 
     return _prefsInstance.getString(KEY_LANGUAGE_CODE) ?? defValue ?? "";
   }
@@ -245,17 +242,15 @@ class Prefs {
 
   static String getCountryCode([String defValue]) {
     assert(_initCalled,
-    "Prefs.init() must be called first in an initState() preferably!");
+        "Prefs.init() must be called first in an initState() preferably!");
     assert(_prefsInstance != null,
-    "Maybe call Prefs.getKeysF() instead. SharedPreferneces not ready yet!");
+        "Maybe call Prefs.getKeysF() instead. SharedPreferneces not ready yet!");
 
     return _prefsInstance.getString(KEY_COUNTRY_CODE) ?? defValue ?? "";
   }
 
-
-
   static Future<bool> setLoggedIn(bool value) async {
-    print('LOGGED_IN_STATUS: ${value}');
+    print('LOGGED_IN_STATUS: $value');
     var instance = await _prefs;
     return instance?.setBool(KEY_IS_LOGGED_IN, value) ?? Future.value(false);
   }
@@ -263,8 +258,6 @@ class Prefs {
   static bool isLoggedIn() {
     return _prefsInstance.getBool(KEY_IS_LOGGED_IN) ?? false ?? false;
   }
-
-
 
   /*static Future<bool> setOfficerDetails(OfficerData officer) async {
     var instance = await _prefs;
@@ -302,7 +295,6 @@ class Prefs {
     return instance?.setString(USER_ID, userID) ?? '';
   }
 
-
   static int getUserLoginType() {
     return _prefsInstance.getInt(USER_TYPE) ?? 0 ?? 0;
   }
@@ -316,7 +308,4 @@ class Prefs {
     var instance = await _prefs;
     return instance?.setInt(USER_TYPE, userType) ?? 0;
   }
-
-
 }
-

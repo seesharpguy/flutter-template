@@ -5,8 +5,13 @@ class AuthenticationService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   // final FirestoreService _firestoreService = locator<FirestoreService>();
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-
   User _currentUser;
+
+  AuthenticationService() {
+    print('Authentication Service init');
+    _currentUser = _firebaseAuth.currentUser;
+  }
+
   User get currentUser => _currentUser;
 
   Future signInWithGoogle() async {

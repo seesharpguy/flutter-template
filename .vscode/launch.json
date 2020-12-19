@@ -12,7 +12,7 @@
             "program": "lib/main.dart",
             "args": [
                 "--dart-define",
-                "FUNCTION_BASE=http://localhost:5001/isolation-fun/us-central1/",
+                "FUNCTION_BASE=http://localhost:5001",
                 "--dart-define",
                 "ROOT_COLLECTION=jibe_nonprod"
             ]

@@ -4,6 +4,7 @@ import 'package:jibe/viewmodels/home_viewmodel.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -11,6 +12,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final _formKey = GlobalKey<FormBuilderState>();
+
+  ValueChanged _onChanged = (val) => print(val);
+
   @override
   Widget build(BuildContext context) {
     return BaseView<HomeViewModel>(onModelReady: (model) {
@@ -71,21 +76,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     buttonColor: Colors.grey[900],
                     onPressed: () {
                       showDialog(
+                          useSafeArea: true,
                           child: new Dialog(
-                            child: new Column(
-                              children: <Widget>[
-                                new TextField(
-                                  decoration: new InputDecoration(
-                                      hintText: "Update Info"),
-                                  // controller: _c,
-                                ),
-                                new FlatButton(
-                                  child: new Text("Save"),
-                                  onPressed: () {},
-                                )
-                              ],
-                            ),
-                          ),
+                              clipBehavior: Clip.hardEdge,
+                              child: _gameIdForm(context, model)),
                           context: context);
                     },
                   ),
@@ -105,5 +99,43 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
     });
+  }
+
+  Widget _gameIdForm(BuildContext context, HomeViewModel model) {
+    return Column(mainAxisSize: MainAxisSize.min, children: [
+      FormBuilder(
+        key: _formKey,
+        autovalidateMode: AutovalidateMode.always,
+        child: FormBuilderTextField(
+          name: 'gameId',
+          decoration: InputDecoration(
+            labelText: 'Enter jibe game id.',
+          ),
+          onChanged: _onChanged,
+          // valueTransformer: (text) => num.tryParse(text),
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.required(context),
+            FormBuilderValidators.minLength(context, 8),
+            FormBuilderValidators.maxLength(context, 8)
+          ]),
+          keyboardType: TextInputType.text,
+        ),
+      ),
+      MaterialButton(
+        color: Theme.of(context).accentColor,
+        child: Text(
+          "Submit",
+          style: TextStyle(color: Colors.white),
+        ),
+        onPressed: () {
+          _formKey.currentState.save();
+          if (_formKey.currentState.validate()) {
+            print(_formKey.currentState.value);
+          } else {
+            print("validation failed");
+          }
+        },
+      )
+    ]);
   }
 }

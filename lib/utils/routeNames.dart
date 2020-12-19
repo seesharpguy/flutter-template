@@ -1,5 +1,5 @@
 class RouteName {
-  static const String Login = "/";
+  static const String Login = "LOGIN";
   static const String Home = "HOME";
   static const String Lobby = "LOBBY";
 }

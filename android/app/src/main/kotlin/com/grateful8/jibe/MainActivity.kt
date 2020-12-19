@@ -1,4 +1,4 @@
-package com.grateful8games.jibe
+package com.grateful8.jibe
 
 import io.flutter.embedding.android.FlutterActivity
 

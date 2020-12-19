@@ -8,6 +8,7 @@ class FirestoreService {
   // final CollectionReference _usersCollectionReference =
   //     FirebaseFirestore.instance.collection('users');
 
+  final rootCollection = const String.fromEnvironment("ROOT_COLLECTION");
   final CollectionReference _jibeCollectionReference = FirebaseFirestore
       .instance
       .collection(const String.fromEnvironment("ROOT_COLLECTION"));
@@ -18,9 +19,9 @@ class FirestoreService {
   Future getGame(String gameId) async {
     try {
       var gameDocumentReference = _jibeCollectionReference.doc(gameId);
-      print('getting game from firestore with id: $gameId');
-      var gameData =
-          await gameDocumentReference.get(GetOptions(source: Source.server));
+      print(
+          'getting game from firestore with id: $gameId from collection $rootCollection');
+      var gameData = await gameDocumentReference.get();
       if (gameData.exists) {
         print('game exists with id: $gameId');
         return Game.fromMap(gameData.data(), gameData.id);

@@ -19,7 +19,7 @@ bundle:
 	flutter build appbundle
 
 apk:
-	flutter build apk --split-per-abi --no-shrink
+	flutter build apk --split-per-abi --dart-define ROOT_COLLECTION=jibe_nonprod
 
 install: clean apk
 	flutter install

@@ -21,7 +21,6 @@ class _BaseViewState<T extends BaseModel> extends State<BaseView<T>> {
     if (widget.onModelReady != null) {
       widget.onModelReady(model);
     }
-    // TODO: implement initState
     super.initState();
   }
 

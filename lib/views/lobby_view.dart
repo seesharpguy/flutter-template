@@ -7,6 +7,7 @@ import 'package:jibe/models/jibe_models.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:avatar_glow/avatar_glow.dart';
 
 class Lobby extends StatefulWidget {
   final String gameId;
@@ -63,13 +64,28 @@ class _LobbyState extends State<Lobby> {
       children: viewModel.players != null && viewModel.players.length > 0
           ? List.generate(viewModel.players.length, (index) {
               return getStructuredGridCell(
-                  viewModel.players[index], viewModel.game);
+                  viewModel.players[index], viewModel.game, index);
             })
           : [LinearProgressIndicator()],
     );
   }
 
-  Column getStructuredGridCell(Player player, Game game) {
+  Column getStructuredGridCell(Player player, Game game, int index) {
+    Color indexToColor(int index) {
+      const Map colors = {
+        0: Colors.red,
+        1: Colors.blue,
+        2: Colors.green,
+        3: Colors.yellow,
+        4: Colors.purple,
+        5: Colors.pink,
+        6: Colors.lime,
+        7: Colors.brown
+      };
+
+      return colors[index];
+    }
+
     return new Column(children: [
       Card(
           elevation: 6,
@@ -79,9 +95,26 @@ class _LobbyState extends State<Lobby> {
             verticalDirection: VerticalDirection.down,
             children: <Widget>[
               _header(player, game),
-              CircleAvatar(
-                backgroundImage: NetworkImage(player.avatar),
-                radius: 50,
+              AvatarGlow(
+                glowColor: indexToColor(index),
+                endRadius: 40,
+                duration: Duration(milliseconds: 2000),
+                repeat: true,
+                showTwoGlows: true,
+                repeatPauseDuration: Duration(milliseconds: 100),
+                child: Material(
+                  elevation: 8.0,
+                  shape: CircleBorder(),
+                  child: CircleAvatar(
+                    backgroundColor: Colors.grey[100],
+                    backgroundImage: player.avatar != null
+                        ? NetworkImage(
+                            player.avatar,
+                          )
+                        : null,
+                    radius: 30.0,
+                  ),
+                ),
               ),
               new Padding(
                 padding: EdgeInsets.only(left: 10.0),

@@ -9,8 +9,11 @@ icon:
 	flutter pub get
 	flutter pub run flutter_launcher_icons:main
 
-keystore:
+generate-keystore:
 	keytool -genkey -v -keystore ~/jibekey.jks -keyalg RSA -keysize 2048 -validity 10000 -alias jibekey
+
+list-keystore:
+	keytool -list -v -alias jibekey -keystore ~/jibekey.jks
 
 bundle:
 	flutter build appbundle

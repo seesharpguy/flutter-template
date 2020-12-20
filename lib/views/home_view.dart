@@ -103,24 +103,27 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _gameIdForm(BuildContext context, HomeViewModel model) {
     return Column(mainAxisSize: MainAxisSize.min, children: [
-      FormBuilder(
-        key: _formKey,
-        autovalidateMode: AutovalidateMode.always,
-        child: FormBuilderTextField(
-          name: 'gameId',
-          decoration: InputDecoration(
-            labelText: 'Enter jibe game id.',
-          ),
-          onChanged: _onChanged,
-          // valueTransformer: (text) => num.tryParse(text),
-          validator: FormBuilderValidators.compose([
-            FormBuilderValidators.required(context),
-            FormBuilderValidators.minLength(context, 8),
-            FormBuilderValidators.maxLength(context, 8)
-          ]),
-          keyboardType: TextInputType.text,
-        ),
-      ),
+      Padding(
+          padding: EdgeInsets.all(10),
+          child: FormBuilder(
+            key: _formKey,
+            autovalidateMode: AutovalidateMode.always,
+            child: FormBuilderTextField(
+              name: 'gameId',
+              decoration: InputDecoration(
+                labelText: 'Enter jibe game id.',
+              ),
+              onChanged: _onChanged,
+              // valueTransformer: (text) => num.tryParse(text),
+              validator: FormBuilderValidators.compose([
+                FormBuilderValidators.required(context),
+                FormBuilderValidators.minLength(context, 8),
+                FormBuilderValidators.maxLength(context, 8)
+              ]),
+              keyboardType: TextInputType.text,
+            ),
+          )),
+      SizedBox(height: 10),
       MaterialButton(
         color: Theme.of(context).accentColor,
         child: Text(

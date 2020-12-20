@@ -44,6 +44,8 @@ class HomeViewModel extends BaseModel {
     });
 
     final results = await callable;
+
+    print(results.toString());
     var data = results.data;
     _navigationService.navigateTo(RouteName.Lobby, arguments: data['gameId']);
   }

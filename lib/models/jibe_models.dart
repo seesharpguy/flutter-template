@@ -57,3 +57,5 @@ class Player {
     );
   }
 }
+
+enum GameStatus { Created, Playing, Completed }

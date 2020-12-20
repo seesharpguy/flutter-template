@@ -5,13 +5,8 @@ import 'package:jibe/models/jibe_models.dart';
 import 'package:flutter/services.dart';
 
 class FirestoreService {
-  // final CollectionReference _usersCollectionReference =
-  //     FirebaseFirestore.instance.collection('users');
-
-  final rootCollection = const String.fromEnvironment("ROOT_COLLECTION");
-  final CollectionReference _jibeCollectionReference = FirebaseFirestore
-      .instance
-      .collection(const String.fromEnvironment("ROOT_COLLECTION"));
+  final CollectionReference _jibeCollectionReference =
+      FirebaseFirestore.instance.collection('jibe');
 
   final StreamController<List<Player>> _playerController =
       StreamController<List<Player>>.broadcast();
@@ -19,11 +14,8 @@ class FirestoreService {
   Future getGame(String gameId) async {
     try {
       var gameDocumentReference = _jibeCollectionReference.doc(gameId);
-      print(
-          'getting game from firestore with id: $gameId from collection $rootCollection');
       var gameData = await gameDocumentReference.get();
       if (gameData.exists) {
-        print('game exists with id: $gameId');
         return Game.fromMap(gameData.data(), gameData.id);
       }
     } catch (e) {

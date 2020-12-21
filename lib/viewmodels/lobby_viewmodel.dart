@@ -17,7 +17,6 @@ class LobbyViewModel extends BaseModel {
   String get gameId => _gameId;
   set gameId(String gameId) {
     _gameId = gameId;
-    print('gameId set in lobby viewmodel with id: $gameId');
     notifyListeners();
   }
 
@@ -25,7 +24,6 @@ class LobbyViewModel extends BaseModel {
   Game get game => _game;
   set game(Game game) {
     _game = game;
-    print(game.gameId);
     notifyListeners();
   }
 

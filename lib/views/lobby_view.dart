@@ -32,6 +32,7 @@ class _LobbyState extends State<Lobby> {
       return SafeArea(
         child: Scaffold(
           appBar: AppBar(
+              automaticallyImplyLeading: false,
               title: Center(child: Text('(${widget.gameId}) Game Lobby'))),
           body: _buildBody(context, model),
         ),

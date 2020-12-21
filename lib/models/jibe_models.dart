@@ -13,23 +13,27 @@ class JibeResult {
 class Game {
   final String gameId;
   final String createdBy;
+  final GameStatus status;
 
-  Game({
-    @required this.gameId,
-    @required this.createdBy,
-  });
+  Game(
+      {@required this.gameId, @required this.createdBy, @required this.status});
 
   Map<String, dynamic> toMap() {
-    return {'gameId': gameId, 'createdBy': createdBy};
+    return {
+      'gameId': gameId,
+      'createdBy': createdBy,
+      'status': status.toString()
+    };
   }
 
   static Game fromMap(Map<String, dynamic> map, String documentId) {
     if (map == null) return null;
 
     return Game(
-      createdBy: map['createdBy'],
-      gameId: documentId,
-    );
+        createdBy: map['createdBy'],
+        gameId: documentId,
+        status: GameStatus.values.firstWhere(
+            (element) => element.toString() == 'GameStatus.' + map['status']));
   }
 }
 

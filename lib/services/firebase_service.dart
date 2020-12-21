@@ -32,7 +32,7 @@ class FirebaseService {
     }
   }
 
-  Future getGame(String gameId) async {
+  Future<Game> getGame(String gameId) async {
     try {
       var gameDocumentReference = _jibeCollectionReference.doc(gameId);
       var gameData = await gameDocumentReference.get();
@@ -40,12 +40,8 @@ class FirebaseService {
         return Game.fromMap(gameData.data(), gameData.id);
       }
     } catch (e) {
+      print("error in firebase_service ${e.toString()}");
       // TODO: Find or create a way to repeat error handling without so much repeated code
-      if (e is PlatformException) {
-        return e.message;
-      }
-
-      return e.toString();
     }
   }
 

@@ -84,7 +84,6 @@ class HomeViewModel extends BaseModel {
 
   void signOutGoogle() async {
     await _auth.logout();
-    print("User Sign Out");
   }
 
   void logout() async {

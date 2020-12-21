@@ -141,8 +141,6 @@ class _HomeScreenState extends State<HomeScreen> {
               if (_formKey.currentState.validate()) {
                 await model.joinGame(_formKey.currentState.value['gameId']);
                 Navigator.pop(context);
-              } else {
-                print("validation failed");
               }
             },
           ),

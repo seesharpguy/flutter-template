@@ -63,3 +63,8 @@ Images
 
 <!-- <span>Photo by <a href="https://unsplash.com/@enginakyurt?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">engin akyurt</a> on <a href="https://unsplash.com/s/photos/thumbs-up?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span> -->
 
+## test with link
+
+```node
+adb shell 'am start -W -a android.intent.action.VIEW -c android.intent.category.BROWSABLE -d "grateful8games://jibe/game/join?gameId=ABCDEF11"'
+```

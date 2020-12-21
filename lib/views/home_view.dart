@@ -14,15 +14,15 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final _formKey = GlobalKey<FormBuilderState>();
 
-  ValueChanged _onChanged = (val) => print(val);
-
   @override
   Widget build(BuildContext context) {
     return BaseView<HomeViewModel>(onModelReady: (model) {
       model.init();
+      model.listenForDeepLinks();
     }, builder: (context, model, build) {
       return SafeArea(
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           body: Container(
             child: Padding(
               padding: const EdgeInsets.all(48.0),
@@ -102,43 +102,42 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _gameIdForm(BuildContext context, HomeViewModel model) {
-    return Column(mainAxisSize: MainAxisSize.min, children: [
-      Padding(
-          padding: EdgeInsets.all(10),
-          child: FormBuilder(
-            key: _formKey,
-            autovalidateMode: AutovalidateMode.always,
-            child: FormBuilderTextField(
-              name: 'gameId',
-              decoration: InputDecoration(
-                labelText: 'Enter jibe game id.',
-              ),
-              onChanged: _onChanged,
-              // valueTransformer: (text) => num.tryParse(text),
-              validator: FormBuilderValidators.compose([
-                FormBuilderValidators.required(context),
-                FormBuilderValidators.minLength(context, 8),
-                FormBuilderValidators.maxLength(context, 8)
-              ]),
-              keyboardType: TextInputType.text,
-            ),
-          )),
-      SizedBox(height: 10),
-      MaterialButton(
-        color: Theme.of(context).accentColor,
-        child: Text(
-          "Submit",
-          style: TextStyle(color: Colors.white),
-        ),
-        onPressed: () {
-          _formKey.currentState.save();
-          if (_formKey.currentState.validate()) {
-            print(_formKey.currentState.value);
-          } else {
-            print("validation failed");
-          }
-        },
-      )
-    ]);
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+              padding: EdgeInsets.all(10),
+              child: FormBuilder(
+                key: _formKey,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                child: FormBuilderTextField(
+                  name: 'gameId',
+                  decoration: InputDecoration(
+                    labelText: 'Enter jibe game id.',
+                  ),
+                  // valueTransformer: (text) => num.tryParse(text),
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(context),
+                    FormBuilderValidators.minLength(context, 8),
+                    FormBuilderValidators.maxLength(context, 8)
+                  ]),
+                  keyboardType: TextInputType.text,
+                ),
+              )),
+          SizedBox(height: 10),
+          FloatingIconButton(
+            icon: FontAwesomeIcons.handPointRight,
+            buttonColor: Colors.grey[900],
+            onPressed: () {
+              _formKey.currentState.save();
+              if (_formKey.currentState.validate()) {
+                model.joinGame(_formKey.currentState.value['gameId']);
+              } else {
+                print("validation failed");
+              }
+            },
+          ),
+        ]);
   }
 }

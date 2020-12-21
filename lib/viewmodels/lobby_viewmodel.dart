@@ -32,6 +32,7 @@ class LobbyViewModel extends BaseModel {
   bool get canBegin =>
       _players != null &&
       _players.length > 1 &&
+      _game != null &&
       _game.createdBy == _auth.currentUser.uid;
 
   void loadGame() async {

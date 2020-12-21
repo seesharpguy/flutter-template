@@ -8,9 +8,11 @@ import 'package:badges/badges.dart';
 import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:share/share.dart';
 
 class Lobby extends StatefulWidget {
   final String gameId;
+
   const Lobby({Key key, this.gameId}) : super(key: key);
 
   @override
@@ -29,7 +31,8 @@ class _LobbyState extends State<Lobby> {
     }, builder: (context, model, build) {
       return SafeArea(
         child: Scaffold(
-          appBar: AppBar(title: Center(child: Text('Game Lobby'))),
+          appBar: AppBar(
+              title: Center(child: Text('(${widget.gameId}) Game Lobby'))),
           body: _buildBody(context, model),
         ),
       );
@@ -37,6 +40,8 @@ class _LobbyState extends State<Lobby> {
   }
 
   Widget _buildBody(BuildContext context, LobbyViewModel viewModel) {
+    final RenderBox box = context.findRenderObject();
+
     return Padding(
         padding: EdgeInsets.all(10),
         child: Column(
@@ -52,6 +57,23 @@ class _LobbyState extends State<Lobby> {
                     },
                   )
                 : Text(''),
+            SizedBox(height: 10),
+            RoundedButtonWithIcon(
+              icon: FontAwesomeIcons.shareSquare,
+              title: "Invite Others".padLeft(45),
+              buttonColor: Colors.grey[900],
+              onPressed: () async {
+                await Share.share('''Please join my jibe game ${widget.gameId}
+                
+                You can join easily by clicking the following link:
+                
+                https://grateful8.games.com/game/join?gameId=${widget.gameId}
+                ''',
+                    subject: widget.gameId,
+                    sharePositionOrigin:
+                        box.localToGlobal(Offset.zero) & box.size);
+              },
+            )
           ],
         ));
   }
@@ -60,7 +82,7 @@ class _LobbyState extends State<Lobby> {
     return GridView.count(
       primary: true,
       crossAxisCount: 2,
-      childAspectRatio: 1.2,
+      childAspectRatio: 1.4,
       children: viewModel.players != null && viewModel.players.length > 0
           ? List.generate(viewModel.players.length, (index) {
               return getStructuredGridCell(

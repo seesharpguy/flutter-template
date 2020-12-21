@@ -8,8 +8,8 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_SURFACE_FLINGER"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/> -->
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="jibe"
@@ -41,6 +41,25 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+            <intent-filter android:label="jibe game http filter">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "grateful8games://jibe -->
+                <data android:scheme="https"
+                      android:host="grateful8.games.com"
+                      android:pathPrefix="/game/join" />
+            </intent-filter>
+            <intent-filter android:label="jibe game filter">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "grateful8games://jibe -->
+                <data android:scheme="grateful8games"
+                      android:host="jibe"
+                      android:pathPrefix="/game/join" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

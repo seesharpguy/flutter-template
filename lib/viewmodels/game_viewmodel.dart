@@ -7,7 +7,7 @@ import 'package:jibe/services/authentication_service.dart';
 import 'package:jibe/services/navigation_service.dart';
 import 'package:jibe/utils/routeNames.dart';
 
-class LobbyViewModel extends BaseModel {
+class GameViewModel extends BaseModel {
   final AuthenticationService _auth = locator<AuthenticationService>();
   final NavigationService _navigationService = locator<NavigationService>();
   final FirebaseService _firestoreService = locator<FirebaseService>();
@@ -29,7 +29,7 @@ class LobbyViewModel extends BaseModel {
     notifyListeners();
 
     if (game.status == GameStatus.Started) {
-      _navigationService.navigateTo(RouteName.JibeGame, arguments: _gameId);
+      _navigationService.navigateTo(RouteName.Home);
     }
   }
 

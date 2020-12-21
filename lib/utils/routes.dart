@@ -4,6 +4,7 @@ import 'package:jibe/views/login_view.dart';
 import 'package:jibe/views/lobby_view.dart';
 import 'package:jibe/splash.dart';
 import 'package:jibe/utils/routeNames.dart';
+import 'package:jibe/views/game_view.dart';
 
 class Routes {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -17,6 +18,9 @@ class Routes {
       case RouteName.Lobby:
         var gameId = settings.arguments as String;
         return MaterialPageRoute(builder: (_) => Lobby(gameId: gameId));
+      case RouteName.JibeGame:
+        var gameId = settings.arguments as String;
+        return MaterialPageRoute(builder: (_) => JibeGame(gameId: gameId));
       default:
         return MaterialPageRoute(
           builder: (context) => Scaffold(

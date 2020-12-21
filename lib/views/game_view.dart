@@ -10,18 +10,18 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:share/share.dart';
 
-class Lobby extends StatefulWidget {
+class JibeGame extends StatefulWidget {
   final String gameId;
 
-  const Lobby({Key key, this.gameId}) : super(key: key);
+  const JibeGame({Key key, this.gameId}) : super(key: key);
 
   @override
-  _LobbyState createState() {
-    return _LobbyState();
+  _JibeGameState createState() {
+    return _JibeGameState();
   }
 }
 
-class _LobbyState extends State<Lobby> {
+class _JibeGameState extends State<JibeGame> {
   @override
   Widget build(BuildContext context) {
     return BaseView<LobbyViewModel>(onModelReady: (model) {

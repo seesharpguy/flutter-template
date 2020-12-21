@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:jibe/models/jibe_models.dart';
-import 'package:flutter/services.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
 class FirebaseService {
@@ -11,6 +10,9 @@ class FirebaseService {
 
   final StreamController<List<Player>> _playerController =
       StreamController<List<Player>>.broadcast();
+
+  final StreamController<Game> _gameController =
+      StreamController<Game>.broadcast();
 
   Future<JibeResult> createGame(
       String displayName, String photoUrl, String userId) async {
@@ -32,17 +34,14 @@ class FirebaseService {
     }
   }
 
-  Future<Game> getGame(String gameId) async {
-    try {
-      var gameDocumentReference = _jibeCollectionReference.doc(gameId);
-      var gameData = await gameDocumentReference.get();
-      if (gameData.exists) {
-        return Game.fromMap(gameData.data(), gameData.id);
+  Stream<Game> game(String gameId) {
+    _jibeCollectionReference.doc(gameId).snapshots().listen((snapshot) {
+      if (snapshot.exists) {
+        _gameController.add(Game.fromMap(snapshot.data(), snapshot.id));
       }
-    } catch (e) {
-      print("error in firebase_service ${e.toString()}");
-      // TODO: Find or create a way to repeat error handling without so much repeated code
-    }
+    });
+
+    return _gameController.stream;
   }
 
   Future<JibeResult> joinGame(
@@ -80,6 +79,28 @@ class FirebaseService {
         players.sort((a, b) => a.playerNumber.compareTo(b.playerNumber));
         // Add the posts onto the controller
         _playerController.add(players);
+      }
+    });
+
+    return _playerController.stream;
+  }
+
+  Stream gameRounds(String gameId) {
+    // Register the handler for when the posts data changes
+    _jibeCollectionReference
+        .doc(gameId)
+        .collection("rounds")
+        .snapshots()
+        .listen((roundsSnapshots) {
+      if (roundsSnapshots.docs.isNotEmpty) {
+        var rounds = roundsSnapshots.docs
+            .map((snapshot) => Player.fromMap(snapshot.data(), snapshot.id))
+            .where((mappedItem) => mappedItem.displayName != null)
+            .toList();
+
+        rounds.sort((a, b) => a.playerNumber.compareTo(b.playerNumber));
+        // Add the posts onto the controller
+        _playerController.add(rounds);
       }
     });
 

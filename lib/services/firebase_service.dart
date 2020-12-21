@@ -3,13 +3,34 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:jibe/models/jibe_models.dart';
 import 'package:flutter/services.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 
-class FirestoreService {
+class FirebaseService {
   final CollectionReference _jibeCollectionReference =
       FirebaseFirestore.instance.collection('jibe');
 
   final StreamController<List<Player>> _playerController =
       StreamController<List<Player>>.broadcast();
+
+  Future<JibeResult> createGame(
+      String displayName, String photoUrl, String userId) async {
+    try {
+      var callable = await FirebaseFunctions.instance
+          .httpsCallable('createGame')
+          .call(<String, dynamic>{
+        "creator": {
+          "displayName": displayName,
+          "avatar": photoUrl,
+          "userId": userId
+        }
+      });
+
+      return JibeResult(data: callable.data);
+    } catch (e) {
+      return JibeResult(
+          exception: "Unknown problem occurred while creating game.");
+    }
+  }
 
   Future getGame(String gameId) async {
     try {
@@ -25,6 +46,25 @@ class FirestoreService {
       }
 
       return e.toString();
+    }
+  }
+
+  Future<JibeResult> joinGame(
+      String gameId, String displayName, String photoUrl, String userId) async {
+    try {
+      var result = await FirebaseFunctions.instance
+          .httpsCallable('joinGame')
+          .call(<String, dynamic>{
+        "gameId": gameId,
+        "displayName": displayName,
+        "avatar": photoUrl,
+        "userId": userId
+      });
+
+      return JibeResult(data: result.data);
+    } catch (e) {
+      return JibeResult(
+          exception: "Unknown problem occurred while joining game.");
     }
   }
 

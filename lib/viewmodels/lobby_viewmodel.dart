@@ -1,6 +1,6 @@
 import 'package:jibe/base/base_model.dart';
 import 'package:jibe/utils/locator.dart';
-import 'package:jibe/services/firestore_service.dart';
+import 'package:jibe/services/firebase_service.dart';
 import 'package:jibe/utils/view_state.dart';
 import 'package:jibe/models/jibe_models.dart';
 import 'package:jibe/services/authentication_service.dart';
@@ -8,7 +8,7 @@ import 'package:jibe/services/authentication_service.dart';
 class LobbyViewModel extends BaseModel {
   final AuthenticationService _auth = locator<AuthenticationService>();
   // final NavigationService _navigationService = locator<NavigationService>();
-  final FirestoreService _firestoreService = locator<FirestoreService>();
+  final FirebaseService _firestoreService = locator<FirebaseService>();
 
   List<Player> _players;
   List<Player> get players => _players;

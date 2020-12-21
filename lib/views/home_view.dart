@@ -5,6 +5,7 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:toast/toast.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -19,6 +20,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return BaseView<HomeViewModel>(onModelReady: (model) {
       model.init();
       model.listenForDeepLinks();
+      model.toasts().listen((String event) {
+        Toast.show(event, context,
+            gravity: Toast.BOTTOM,
+            backgroundColor: Colors.red[600],
+            duration: Toast.LENGTH_LONG);
+      });
     }, builder: (context, model, build) {
       return SafeArea(
         child: Scaffold(
@@ -129,10 +136,11 @@ class _HomeScreenState extends State<HomeScreen> {
           FloatingIconButton(
             icon: FontAwesomeIcons.handPointRight,
             buttonColor: Colors.grey[900],
-            onPressed: () {
+            onPressed: () async {
               _formKey.currentState.save();
               if (_formKey.currentState.validate()) {
-                model.joinGame(_formKey.currentState.value['gameId']);
+                await model.joinGame(_formKey.currentState.value['gameId']);
+                Navigator.pop(context);
               } else {
                 print("validation failed");
               }

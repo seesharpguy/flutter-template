@@ -22,13 +22,11 @@ class Prefs {
   static Future<void> init() async {
     _initCalled = true;
     _prefsInstance = await _prefs;
-    print("init called");
   }
 
   static void dispose() {
     _prefs = null;
     _prefsInstance = null;
-    print("Dispose called");
   }
 
   static Set<String> getKeys() {

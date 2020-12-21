@@ -5,13 +5,19 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:jibe/utils/locator.dart';
 import 'package:jibe/services/navigation_service.dart';
 import 'package:jibe/utils/routeNames.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:jibe/services/deeplink_service.dart';
+import 'package:jibe/services/firebase_service.dart';
+import 'package:flutter/services.dart';
 
 class HomeViewModel extends BaseModel {
   final AuthenticationService _auth = locator<AuthenticationService>();
   final NavigationService _navigationService = locator<NavigationService>();
   final DeepLinkService _deepLinkService = locator<DeepLinkService>();
+  final FirebaseService _firebaseService = locator<FirebaseService>();
+
+  final StreamController<String> _toastController =
+      StreamController<String>.broadcast();
+
   User _currentUser;
 
   User get currentUser => _auth.currentUser;
@@ -38,39 +44,42 @@ class HomeViewModel extends BaseModel {
     });
   }
 
-  Future<void> createGame() async {
-    User user = _auth.currentUser;
-    Future<HttpsCallableResult<dynamic>> callable = FirebaseFunctions.instance
-        .httpsCallable('createGame')
-        .call(<String, dynamic>{
-      "creator": {
-        "displayName": user.displayName,
-        "avatar": user.photoURL,
-        "userId": user.uid
-      }
-    });
+  Stream<String> toasts() {
+    return _toastController.stream;
+  }
 
-    final results = await callable;
-    var data = results.data;
-    _navigationService.navigateTo(RouteName.Lobby, arguments: data['gameId']);
+  Future<void> createGame() async {
+    try {
+      var result = await _firebaseService.createGame(
+          displayName, avatarUrl, _currentUser.uid);
+      var data = result.data;
+      if (data != null) {
+        _navigationService.navigateTo(RouteName.Lobby,
+            arguments: data['gameId']);
+      }
+    } catch (e) {
+      _toastController.add("Error occurred creating game");
+    }
   }
 
   Future<void> joinGame(String gameId) async {
-    User user = _auth.currentUser;
-    Future<HttpsCallableResult<dynamic>> callable = FirebaseFunctions.instance
-        .httpsCallable('joinGame')
-        .call(<String, dynamic>{
-      "gameId": gameId,
-      "displayName": user.displayName,
-      "avatar": user.photoURL,
-      "userId": user.uid
-    });
+    try {
+      var result = await _firebaseService.joinGame(
+          gameId, displayName, avatarUrl, _currentUser.uid);
 
-    final results = await callable;
-
-    print(results.toString());
-    var data = results.data;
-    _navigationService.navigateTo(RouteName.Lobby, arguments: data['gameId']);
+      if (result.hasError) {
+        _toastController.add(result.data['message']);
+      } else {
+        if (result.data != null) {
+          _navigationService.navigateTo(RouteName.Lobby,
+              arguments: result.data['gameId']);
+        }
+      }
+    } catch (e) {
+      if (e is PlatformException) {
+        _toastController.add("Error occurred joining game");
+      }
+    }
   }
 
   void signOutGoogle() async {

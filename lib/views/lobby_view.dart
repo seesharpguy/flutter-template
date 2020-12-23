@@ -28,6 +28,8 @@ class _LobbyState extends State<Lobby> {
       model.gameId = widget.gameId;
       model.listenToGame();
       model.listenForPlayers();
+    }, onModelDone: (model) {
+      model.unlisten();
     }, builder: (context, model, build) {
       return SafeArea(
         child: Scaffold(

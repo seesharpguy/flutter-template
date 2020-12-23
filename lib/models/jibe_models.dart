@@ -14,15 +14,20 @@ class Game {
   final String gameId;
   final String createdBy;
   final GameStatus status;
+  final int currentRound;
 
   Game(
-      {@required this.gameId, @required this.createdBy, @required this.status});
+      {@required this.gameId,
+      @required this.createdBy,
+      @required this.status,
+      this.currentRound});
 
   Map<String, dynamic> toMap() {
     return {
       'gameId': gameId,
       'createdBy': createdBy,
-      'status': status.toString()
+      'status': status.toString(),
+      'currentRound': currentRound
     };
   }
 
@@ -32,6 +37,7 @@ class Game {
     return Game(
         createdBy: map['createdBy'],
         gameId: documentId,
+        currentRound: map['currentRound'],
         status: GameStatus.values.firstWhere(
             (element) => element.toString() == 'GameStatus.' + map['status']));
   }
@@ -73,22 +79,56 @@ class Player {
   }
 }
 
+class Turn {
+  final String documentId;
+  final String playerId;
+  final int score;
+  final String answer;
+
+  Turn(
+      {@required this.documentId,
+      @required this.playerId,
+      this.score,
+      this.answer});
+
+  Map<String, dynamic> toMap() {
+    return {
+      'documentId': documentId,
+      'playerId': playerId,
+      'score': score,
+      'answer': answer
+    };
+  }
+
+  static Turn fromMap(Map<String, dynamic> map, String documentId) {
+    if (map == null) return null;
+
+    return Turn(
+        score: map['score'],
+        playerId: map['playerId'],
+        documentId: documentId,
+        answer: map['answer']);
+  }
+}
+
 class Round {
   final String documentId;
   final int number;
-  final List<Player> players;
+  final String word;
+  final RoundStatus status;
 
-  Round({
-    @required this.number,
-    @required this.players,
-    this.documentId,
-  });
+  Round(
+      {@required this.number,
+      @required this.documentId,
+      @required this.word,
+      this.status});
 
   Map<String, dynamic> toMap() {
     return {
       'documentId': documentId,
       'number': number,
-      'players': players,
+      'word': word,
+      'status': status
     };
   }
 
@@ -96,11 +136,14 @@ class Round {
     if (map == null) return null;
 
     return Round(
-      number: map['number'],
-      players: map['avatar'],
-      documentId: documentId,
-    );
+        number: map['number'],
+        word: map['word'],
+        documentId: documentId,
+        status: RoundStatus.values.firstWhere(
+            (element) => element.toString() == 'RoundStatus.' + map['status']));
   }
 }
 
 enum GameStatus { Created, Started, Completed, Unknown }
+
+enum RoundStatus { Started, Scoring, Completed, Unknown }

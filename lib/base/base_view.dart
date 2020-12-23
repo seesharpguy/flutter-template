@@ -6,8 +6,9 @@ import 'package:provider/provider.dart';
 class BaseView<T extends BaseModel> extends StatefulWidget {
   final Widget Function(BuildContext context, T model, Widget child) builder;
   final Function(T) onModelReady;
+  final Function(T) onModelDone;
 
-  BaseView({@required this.builder, this.onModelReady});
+  BaseView({@required this.builder, this.onModelReady, this.onModelDone});
 
   @override
   _BaseViewState<T> createState() => _BaseViewState<T>();
@@ -22,6 +23,14 @@ class _BaseViewState<T extends BaseModel> extends State<BaseView<T>> {
       widget.onModelReady(model);
     }
     super.initState();
+  }
+
+  @override
+  void deactivate() {
+    if (widget.onModelDone != null) {
+      widget.onModelDone(model);
+    }
+    super.deactivate();
   }
 
   @override

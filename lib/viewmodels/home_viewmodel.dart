@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:jibe/base/base_model.dart';
 import 'package:jibe/services/authentication_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,7 +8,6 @@ import 'package:jibe/services/navigation_service.dart';
 import 'package:jibe/utils/routeNames.dart';
 import 'package:jibe/services/deeplink_service.dart';
 import 'package:jibe/services/firebase_service.dart';
-import 'package:flutter/services.dart';
 
 class HomeViewModel extends BaseModel {
   final AuthenticationService _auth = locator<AuthenticationService>();
@@ -50,13 +50,14 @@ class HomeViewModel extends BaseModel {
 
   Future<void> createGame() async {
     try {
-      var result = await _firebaseService.createGame(
-          displayName, avatarUrl, _currentUser.uid);
+      var result = await _firebaseService.createGame();
       var data = result.data;
       if (data != null) {
         _navigationService.navigateTo(RouteName.Lobby,
             arguments: data['gameId']);
       }
+    } on FirebaseFunctionsException catch (e) {
+      _toastController.add(e.message);
     } catch (e) {
       _toastController.add("Error occurred creating game");
     }
@@ -64,21 +65,14 @@ class HomeViewModel extends BaseModel {
 
   Future<void> joinGame(String gameId) async {
     try {
-      var result = await _firebaseService.joinGame(
-          gameId, displayName, avatarUrl, _currentUser.uid);
+      var result = await _firebaseService.joinGame(gameId);
 
-      if (result.hasError) {
-        _toastController.add(result.data['message']);
-      } else {
-        if (result.data != null) {
-          _navigationService.navigateTo(RouteName.Lobby,
-              arguments: result.data['gameId']);
-        }
-      }
+      _navigationService.navigateTo(RouteName.Lobby,
+          arguments: result.data['gameId']);
+    } on FirebaseFunctionsException catch (e) {
+      _toastController.add(e.message);
     } catch (e) {
-      if (e is PlatformException) {
-        _toastController.add("Error occurred joining game");
-      }
+      _toastController.add("Error occurred joining game");
     }
   }
 

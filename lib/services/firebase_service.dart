@@ -14,27 +14,50 @@ class FirebaseService {
   final StreamController<Game> _gameController =
       StreamController<Game>.broadcast();
 
-  Future<JibeResult> createGame(
-      String displayName, String photoUrl, String userId) async {
-    try {
-      var callable = await FirebaseFunctions.instance
-          .httpsCallable('createGame')
-          .call(<String, dynamic>{
-        "creator": {
-          "displayName": displayName,
-          "avatar": photoUrl,
-          "userId": userId
-        }
-      });
+  final StreamController<Round> _roundController =
+      StreamController<Round>.broadcast();
 
-      return JibeResult(data: callable.data);
-    } catch (e) {
-      return JibeResult(
-          exception: "Unknown problem occurred while creating game.");
-    }
+  final StreamController<List<Turn>> _turnController =
+      StreamController<List<Turn>>.broadcast();
+
+  Future<HttpsCallableResult<dynamic>> createGame() async {
+    var callable = await FirebaseFunctions.instance
+        .httpsCallable('createGame', options: HttpsCallableOptions())
+        .call();
+
+    return callable;
   }
 
-  Stream<Game> game(String gameId) {
+  Future<HttpsCallableResult<dynamic>> joinGame(String gameId) async {
+    var result = await FirebaseFunctions.instance
+        .httpsCallable('joinGame')
+        .call(<String, dynamic>{"gameId": gameId});
+
+    return result;
+  }
+
+  Future<HttpsCallableResult<dynamic>> startGame(String gameId) async {
+    var result = await FirebaseFunctions.instance
+        .httpsCallable('startGame')
+        .call(<String, dynamic>{"gameId": gameId});
+
+    return result;
+  }
+
+  Future<HttpsCallableResult<dynamic>> takeTurn(
+      String gameId, String round, String answer) async {
+    var result = await FirebaseFunctions.instance
+        .httpsCallable('takeTurn')
+        .call(<String, dynamic>{
+      "gameId": gameId,
+      "round": round,
+      "answer": answer
+    });
+
+    return result;
+  }
+
+  Stream<Game> gameListener(String gameId) {
     _jibeCollectionReference.doc(gameId).snapshots().listen((snapshot) {
       if (snapshot.exists) {
         _gameController.add(Game.fromMap(snapshot.data(), snapshot.id));
@@ -44,26 +67,11 @@ class FirebaseService {
     return _gameController.stream;
   }
 
-  Future<JibeResult> joinGame(
-      String gameId, String displayName, String photoUrl, String userId) async {
-    try {
-      var result = await FirebaseFunctions.instance
-          .httpsCallable('joinGame')
-          .call(<String, dynamic>{
-        "gameId": gameId,
-        "displayName": displayName,
-        "avatar": photoUrl,
-        "userId": userId
-      });
-
-      return JibeResult(data: result.data);
-    } catch (e) {
-      return JibeResult(
-          exception: "Unknown problem occurred while joining game.");
-    }
+  StreamController gameController() {
+    return _gameController;
   }
 
-  Stream gamePlayers(String gameId) {
+  Stream<List<Player>> playerListener(String gameId) {
     // Register the handler for when the posts data changes
     _jibeCollectionReference
         .doc(gameId)
@@ -77,7 +85,6 @@ class FirebaseService {
             .toList();
 
         players.sort((a, b) => a.playerNumber.compareTo(b.playerNumber));
-        // Add the posts onto the controller
         _playerController.add(players);
       }
     });
@@ -85,25 +92,54 @@ class FirebaseService {
     return _playerController.stream;
   }
 
-  Stream gameRounds(String gameId) {
+  StreamController playerController() {
+    return _playerController;
+  }
+
+  Stream<Round> roundListener(String gameId, String round) {
     // Register the handler for when the posts data changes
     _jibeCollectionReference
         .doc(gameId)
         .collection("rounds")
+        .doc(round)
         .snapshots()
-        .listen((roundsSnapshots) {
-      if (roundsSnapshots.docs.isNotEmpty) {
-        var rounds = roundsSnapshots.docs
-            .map((snapshot) => Player.fromMap(snapshot.data(), snapshot.id))
-            .where((mappedItem) => mappedItem.displayName != null)
-            .toList();
-
-        rounds.sort((a, b) => a.playerNumber.compareTo(b.playerNumber));
-        // Add the posts onto the controller
-        _playerController.add(rounds);
+        .listen((roundsSnapshot) {
+      if (roundsSnapshot.exists) {
+        _roundController
+            .add(Round.fromMap(roundsSnapshot.data(), roundsSnapshot.id));
       }
     });
 
-    return _playerController.stream;
+    return _roundController.stream;
+  }
+
+  StreamController roundController() {
+    return _roundController;
+  }
+
+  Stream<List<Turn>> turnListener(String gameId, String round) {
+    // Register the handler for when the posts data changes
+    _jibeCollectionReference
+        .doc(gameId)
+        .collection("rounds")
+        .doc(round)
+        .collection("turns")
+        .snapshots()
+        .listen((turnSnapshot) {
+      if (turnSnapshot.docs.isNotEmpty) {
+        var players = turnSnapshot.docs
+            .map((snapshot) => Turn.fromMap(snapshot.data(), snapshot.id))
+            .where((mappedItem) => mappedItem.answer != null)
+            .toList();
+
+        _turnController.add(players);
+      }
+    });
+
+    return _turnController.stream;
+  }
+
+  StreamController turnController() {
+    return _turnController;
   }
 }

@@ -1,3 +1,4 @@
+import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:jibe/base/base_view.dart';
@@ -23,12 +24,25 @@ class JibeGame extends StatefulWidget {
 
 class _JibeGameState extends State<JibeGame> {
   final _formKey = GlobalKey<FormBuilderState>();
+  final cardKey = GlobalKey<FlipCardState>();
+
   @override
   Widget build(BuildContext context) {
     return BaseView<GameViewModel>(onModelReady: (model) {
       model.gameId = widget.gameId;
       model.listenToGame();
       model.listenForPlayers();
+      model.roundStatus().listen((event) {
+        if (event == RoundStatus.Started) {
+          if (!cardKey.currentState.isFront) {
+            cardKey.currentState.toggleCard();
+          }
+        } else {
+          if (cardKey.currentState.isFront) {
+            cardKey.currentState.toggleCard();
+          }
+        }
+      });
     }, onModelDone: (model) {
       model.unlisten();
     }, builder: (context, model, build) {
@@ -46,6 +60,18 @@ class _JibeGameState extends State<JibeGame> {
   }
 
   Widget _buildBody(BuildContext context, GameViewModel viewModel) {
+    return FlipCard(
+      key: cardKey,
+      direction: FlipDirection.HORIZONTAL,
+      flipOnTouch: false,
+      front: _cardFront(context, viewModel),
+      back: Container(
+        child: Text('Back'),
+      ),
+    );
+  }
+
+  Widget _cardFront(BuildContext context, GameViewModel viewModel) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

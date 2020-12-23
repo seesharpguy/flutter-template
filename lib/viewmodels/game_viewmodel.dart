@@ -5,11 +5,15 @@ import 'package:jibe/utils/view_state.dart';
 import 'package:jibe/models/jibe_models.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:jibe/services/authentication_service.dart';
+import 'dart:async';
 
 class GameViewModel extends BaseModel {
   // final NavigationService _navigationService = locator<NavigationService>();
   final AuthenticationService _auth = locator<AuthenticationService>();
   final FirebaseService _firebaseService = locator<FirebaseService>();
+
+  final StreamController<RoundStatus> _roundController =
+      StreamController<RoundStatus>.broadcast();
 
   List<Player> _players;
   List<Player> get players => _players;
@@ -80,10 +84,15 @@ class GameViewModel extends BaseModel {
         .roundListener(gameId, game.currentRound.toString())
         .listen((roundData) {
       if (roundData != null) {
+        _roundController.add(roundData.status);
         currentRound = roundData;
       }
     });
     state = ViewState.Idle;
+  }
+
+  Stream<RoundStatus> roundStatus() {
+    return _roundController.stream;
   }
 
   void listenForTurns() async {

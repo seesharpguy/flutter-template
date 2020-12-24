@@ -10,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:jibe/widgets/score_gridview.dart';
 
 class JibeGame extends StatefulWidget {
   final String gameId;
@@ -61,14 +62,12 @@ class _JibeGameState extends State<JibeGame> {
 
   Widget _buildBody(BuildContext context, GameViewModel viewModel) {
     return FlipCard(
-      key: cardKey,
-      direction: FlipDirection.HORIZONTAL,
-      flipOnTouch: false,
-      front: _cardFront(context, viewModel),
-      back: Container(
-        child: Text('Back'),
-      ),
-    );
+        key: cardKey,
+        direction: FlipDirection.HORIZONTAL,
+        flipOnTouch: false,
+        front: _cardFront(context, viewModel),
+        back: ScoreGridView(
+            playerViewModel: viewModel, gameViewModel: viewModel));
   }
 
   Widget _cardFront(BuildContext context, GameViewModel viewModel) {

@@ -1,4 +1,5 @@
 import 'package:jibe/base/base_model.dart';
+import 'package:jibe/models/interface.dart';
 import 'package:jibe/utils/locator.dart';
 import 'package:jibe/services/firebase_service.dart';
 import 'package:jibe/utils/view_state.dart';
@@ -8,7 +9,7 @@ import 'package:jibe/services/navigation_service.dart';
 import 'package:jibe/utils/routeNames.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
-class LobbyViewModel extends BaseModel {
+class LobbyViewModel extends BaseModel implements IHavePlayers, IHaveGame {
   final AuthenticationService _auth = locator<AuthenticationService>();
   final NavigationService _navigationService = locator<NavigationService>();
   final FirebaseService _firebaseService = locator<FirebaseService>();
@@ -33,6 +34,7 @@ class LobbyViewModel extends BaseModel {
     if (game.status != _previousStaus) {
       _previousStaus = game.status;
       if (game.status == GameStatus.Started) {
+        print("starting game from lobby viewmodel");
         _navigationService.navigateTo(RouteName.JibeGame, arguments: _gameId);
       } else {
         notifyListeners();

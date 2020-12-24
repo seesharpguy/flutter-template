@@ -1,4 +1,5 @@
 import 'package:jibe/base/base_model.dart';
+import 'package:jibe/models/interface.dart';
 import 'package:jibe/utils/locator.dart';
 import 'package:jibe/services/firebase_service.dart';
 import 'package:jibe/utils/view_state.dart';
@@ -7,7 +8,7 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:jibe/services/authentication_service.dart';
 import 'dart:async';
 
-class GameViewModel extends BaseModel {
+class GameViewModel extends BaseModel implements IHaveGame, IHavePlayers {
   // final NavigationService _navigationService = locator<NavigationService>();
   final AuthenticationService _auth = locator<AuthenticationService>();
   final FirebaseService _firebaseService = locator<FirebaseService>();

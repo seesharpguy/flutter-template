@@ -140,8 +140,8 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () async {
               _formKey.currentState.save();
               if (_formKey.currentState.validate()) {
-                await model.joinGame(_formKey.currentState.value['gameId']);
-                Navigator.pop(context);
+                model.joinGame(_formKey.currentState.value['gameId']);
+                Navigator.of(context, rootNavigator: true).pop();
               }
             },
           ),

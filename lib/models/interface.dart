@@ -7,3 +7,7 @@ abstract class IHavePlayers {
 abstract class IHaveGame {
   Game get game;
 }
+
+abstract class IHaveTurns {
+  List<Turn> get turns;
+}

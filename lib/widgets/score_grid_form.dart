@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:jibe/models/interface.dart';
 import 'package:jibe/models/jibe_models.dart';
 import 'package:jibe/widgets/header.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
-class ScoreGridView extends StatelessWidget {
-  ScoreGridView({this.playerViewModel, this.gameViewModel});
+class ScoreGridForm extends StatelessWidget {
+  ScoreGridForm({this.playerViewModel, this.gameViewModel, this.turnViewmodel});
   final IHavePlayers playerViewModel;
   final IHaveGame gameViewModel;
+  final IHaveTurns turnViewmodel;
 
   @override
   Widget build(BuildContext context) {
@@ -15,17 +17,18 @@ class ScoreGridView extends StatelessWidget {
       primary: true,
       crossAxisCount: 2,
       childAspectRatio: 1.4,
-      children: playerViewModel.players != null &&
-              playerViewModel.players.length > 0
-          ? List.generate(playerViewModel.players.length, (index) {
-              return getStructuredGridCell(
-                  playerViewModel.players[index], gameViewModel.game, index);
-            })
-          : [LinearProgressIndicator()],
+      children:
+          playerViewModel.players != null && playerViewModel.players.length > 0
+              ? List.generate(playerViewModel.players.length, (index) {
+                  return getStructuredGridCell(playerViewModel.players[index],
+                      gameViewModel.game, turnViewmodel?.turns, index);
+                })
+              : [LinearProgressIndicator()],
     );
   }
 
-  Column getStructuredGridCell(Player player, Game game, int index) {
+  Column getStructuredGridCell(
+      Player player, Game game, List<Turn> turns, int index) {
     Color indexToColor(int index) {
       const Map colors = {
         0: Colors.red,
@@ -39,6 +42,17 @@ class ScoreGridView extends StatelessWidget {
       };
 
       return colors[index];
+    }
+
+    String getWordForPlayer(List<Turn> turns, Player player) {
+      if (turns == null) {
+        return "";
+      }
+      return turns
+              .firstWhere((turn) => turn.playerId == player.userId,
+                  orElse: null)
+              .answer ??
+          "";
     }
 
     return new Column(children: [
@@ -76,7 +90,7 @@ class ScoreGridView extends StatelessWidget {
                 child: new Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Center(child: new Text(player.displayName))
+                    Center(child: new Text(getWordForPlayer(turns, player)))
                   ],
                 ),
               )

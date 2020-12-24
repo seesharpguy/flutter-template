@@ -8,7 +8,8 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:jibe/services/authentication_service.dart';
 import 'dart:async';
 
-class GameViewModel extends BaseModel implements IHaveGame, IHavePlayers {
+class GameViewModel extends BaseModel
+    implements IHaveGame, IHavePlayers, IHaveTurns {
   // final NavigationService _navigationService = locator<NavigationService>();
   final AuthenticationService _auth = locator<AuthenticationService>();
   final FirebaseService _firebaseService = locator<FirebaseService>();
@@ -104,6 +105,7 @@ class GameViewModel extends BaseModel implements IHaveGame, IHavePlayers {
         .listen((turnData) {
       List<Turn> updatedTurns = turnData;
       if (updatedTurns != null) {
+        print("got turns");
         _turns = updatedTurns;
         notifyListeners();
       }

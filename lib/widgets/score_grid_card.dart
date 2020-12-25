@@ -19,9 +19,11 @@ class ScoreGridCard extends StatelessWidget {
         elevation: 6,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Expanded(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   PlayerInfo(
                       player: player, game: game, turns: turns, index: index),
@@ -30,8 +32,10 @@ class ScoreGridCard extends StatelessWidget {
             ),
             isGameCreator
                 ? Expanded(
+                    flex: 2,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         FormBuilderChoiceChip(
                           name: player.userId,

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:jibe/models/jibe_models.dart';
@@ -40,13 +41,12 @@ class PlayerInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       verticalDirection: VerticalDirection.down,
       children: <Widget>[
         AvatarGlow(
           glowColor: indexToColor(index),
-          endRadius: 40,
+          endRadius: 30,
           duration: Duration(milliseconds: 2000),
           repeat: true,
           showTwoGlows: true,
@@ -61,17 +61,16 @@ class PlayerInfo extends StatelessWidget {
                       player.avatar,
                     )
                   : null,
-              radius: 30.0,
+              radius: 23.0,
             ),
           ),
         ),
-        new Padding(
-          padding: EdgeInsets.only(left: 1.0),
-          child: new Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Center(child: new Text(getWordForPlayer(turns, player)))
-            ],
+        Padding(
+          padding: EdgeInsets.only(top: 6),
+          child: AutoSizeText(
+            getWordForPlayer(turns, player),
+            maxLines: 1,
+            style: TextStyle(fontSize: 20),
           ),
         )
       ],

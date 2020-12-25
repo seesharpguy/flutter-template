@@ -57,6 +57,19 @@ class FirebaseService {
     return result;
   }
 
+  Future<HttpsCallableResult<dynamic>> scoreTurn(
+      String gameId, String round, Map<String, dynamic> answers) async {
+    var result = await FirebaseFunctions.instance
+        .httpsCallable('scoreRound')
+        .call(<String, dynamic>{
+      "gameId": gameId,
+      "round": round,
+      "answers": answers
+    });
+
+    return result;
+  }
+
   Stream<Game> gameListener(String gameId) {
     _jibeCollectionReference.doc(gameId).snapshots().listen((snapshot) {
       if (snapshot.exists) {

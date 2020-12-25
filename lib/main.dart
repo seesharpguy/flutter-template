@@ -24,13 +24,13 @@ void main() async {
         'Running in debug mode on ${Platform.isAndroid} so pointing to local emulator');
     if (Platform.isAndroid) {
       FirebaseFirestore.instance.settings =
-          Settings(host: '10.0.2.2:8083', sslEnabled: false);
+          Settings(host: '10.0.2.2:8082', sslEnabled: false);
 
       FirebaseFunctions.instance
           .useFunctionsEmulator(origin: 'http://10.0.2.2:5001');
     } else {
       FirebaseFirestore.instance.settings =
-          Settings(host: '127.0.0.1:8083', sslEnabled: false);
+          Settings(host: '127.0.0.1:8082', sslEnabled: false);
 
       FirebaseFunctions.instance
           .useFunctionsEmulator(origin: 'http://localhost:5001');

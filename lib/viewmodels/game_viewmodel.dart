@@ -2,7 +2,6 @@ import 'package:jibe/base/base_model.dart';
 import 'package:jibe/models/interface.dart';
 import 'package:jibe/utils/locator.dart';
 import 'package:jibe/services/firebase_service.dart';
-import 'package:jibe/utils/view_state.dart';
 import 'package:jibe/models/jibe_models.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:jibe/services/authentication_service.dart';
@@ -31,7 +30,6 @@ class GameViewModel extends BaseModel
   Game get game => _game;
   set game(Game game) {
     _game = game;
-    safeListenToGame();
     notifyListeners();
   }
 
@@ -49,26 +47,26 @@ class GameViewModel extends BaseModel
     notifyListeners();
   }
 
+  bool get isGameCreator =>
+      game != null && game.createdBy == _auth.currentUser.uid;
+
   bool get canSubmit =>
       _turns == null ||
       turns.firstWhere((t) => t.playerId == _auth.currentUser.uid,
               orElse: () => null) ==
           null;
 
-  void listenToGame() async {
-    state = ViewState.Busy;
-
+  void listenToGame() {
     _firebaseService.gameListener(gameId).listen((gameData) {
+      print("got game");
       if (gameData != null) {
         game = gameData;
+        listenToRound();
       }
     });
-    state = ViewState.Idle;
   }
 
-  void listenForPlayers() async {
-    state = ViewState.Busy;
-
+  void listenForPlayers() {
     _firebaseService.playerListener(gameId).listen((playerData) {
       List<Player> updatedPlayers = playerData;
       if (updatedPlayers != null) {
@@ -76,41 +74,47 @@ class GameViewModel extends BaseModel
         notifyListeners();
       }
     });
-    state = ViewState.Idle;
   }
 
-  void listenToRound() async {
-    state = ViewState.Busy;
+  void listenToRound() {
+    print("listening to round ${game.currentRound}");
 
     _firebaseService
         .roundListener(gameId, game.currentRound.toString())
         .listen((roundData) {
       if (roundData != null) {
-        _roundController.add(roundData.status);
+        RoundStatus prevStatus = currentRound != null
+            ? currentRound.status ?? RoundStatus.Unknown
+            : RoundStatus.Unknown;
+
+        print("prevStatus: $prevStatus");
+        print("currentStatus: ${roundData.status}");
+
         currentRound = roundData;
+        listenForTurns();
+
+        if (roundData.status != prevStatus &&
+            prevStatus != RoundStatus.Unknown) {
+          turns = null;
+          _roundController.add(roundData.status);
+        }
       }
     });
-    state = ViewState.Idle;
   }
 
   Stream<RoundStatus> roundStatus() {
     return _roundController.stream;
   }
 
-  void listenForTurns() async {
-    state = ViewState.Busy;
-
+  void listenForTurns() {
+    print("listening for turns for round ${game.currentRound}");
     _firebaseService
         .turnListener(gameId, game.currentRound.toString())
         .listen((turnData) {
       List<Turn> updatedTurns = turnData;
-      if (updatedTurns != null) {
-        print("got turns");
-        _turns = updatedTurns;
-        notifyListeners();
-      }
+      print("got turns");
+      turns = updatedTurns;
     });
-    state = ViewState.Idle;
   }
 
   Future<void> takeTurn(String answer) async {
@@ -124,15 +128,14 @@ class GameViewModel extends BaseModel
     }
   }
 
-  void safeListenToGame() {
-    if (!_firebaseService.roundController().hasListener) {
-      print("listening to round");
-      listenToRound();
-    }
-
-    if (!_firebaseService.turnController().hasListener) {
-      print("listening to turns");
-      listenForTurns();
+  Future<void> scoreTurn(Map<String, dynamic> answers) async {
+    try {
+      await _firebaseService.scoreTurn(
+          gameId, game.currentRound.toString(), answers);
+    } on FirebaseFunctionsException catch (e) {
+      // _toastController.add(e.message);
+    } catch (e) {
+      // _toastController.add("Error occurred joining game");
     }
   }
 

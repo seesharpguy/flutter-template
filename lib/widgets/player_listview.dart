@@ -1,4 +1,3 @@
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:jibe/models/jibe_models.dart';
 import 'package:avatar_glow/avatar_glow.dart';

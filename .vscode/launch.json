@@ -5,10 +5,21 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Flutter",
+            "name": "debug",
             "request": "launch",
             "type": "dart",
             "flutterMode": "debug",
+            "program": "lib/main.dart",
+            "args": [
+                "--dart-define",
+                "FUNCTION_BASE=http://localhost:5001"
+            ]
+          },
+          {
+            "name": "profile",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile",
             "program": "lib/main.dart",
             "args": [
                 "--dart-define",

@@ -21,5 +21,11 @@ bundle:
 apk:
 	flutter build apk --split-per-abi
 
-install: clean apk
+build-ios:
+	flutter build ios
+
+install-android: clean apk
+	flutter install
+
+install-ios: clean build-ios
 	flutter install

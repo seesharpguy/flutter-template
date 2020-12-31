@@ -1,6 +1,6 @@
-# flutter template
+# APPLICATION_NAME
 
-A new Flutter project.
+A new Grateful8 Games project.
 
 ## Getting Started
 

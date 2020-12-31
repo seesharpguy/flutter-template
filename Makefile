@@ -1,3 +1,7 @@
+rename:
+	npm install cli
+	node ./cli/index.js
+
 clean:
 	flutter clean
 	flutter pub get

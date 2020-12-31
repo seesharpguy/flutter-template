@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:APPLICATION_NAME/base/base_model.dart';
-import 'package:APPLICATION_NAME/models/APPLICATION_NAME_models.dart';
+import 'package:APPLICATION_NAME/models/game_models.dart';
 import 'package:APPLICATION_NAME/utils/locator.dart';
 import 'package:APPLICATION_NAME/services/navigation_service.dart';
 import 'package:APPLICATION_NAME/utils/routeNames.dart';

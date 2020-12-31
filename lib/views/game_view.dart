@@ -9,7 +9,7 @@ import 'package:APPLICATION_NAME/base/base_view.dart';
 import 'package:APPLICATION_NAME/utils/util.dart';
 import 'package:APPLICATION_NAME/utils/view_state.dart';
 import 'package:APPLICATION_NAME/viewmodels/game_viewmodel.dart';
-import 'package:APPLICATION_NAME/models/APPLICATION_NAME_models.dart';
+import 'package:APPLICATION_NAME/models/game_models.dart';
 import 'package:APPLICATION_NAME/widgets/game.dart';
 import 'package:APPLICATION_NAME/widgets/score_grid_form.dart';
 

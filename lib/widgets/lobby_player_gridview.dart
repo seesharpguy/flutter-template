@@ -1,7 +1,7 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:APPLICATION_NAME/models/interface.dart';
-import 'package:APPLICATION_NAME/models/APPLICATION_NAME_models.dart';
+import 'package:APPLICATION_NAME/models/game_models.dart';
 import 'package:APPLICATION_NAME/widgets/header.dart';
 
 class LobbyPlayerGridView extends StatelessWidget {

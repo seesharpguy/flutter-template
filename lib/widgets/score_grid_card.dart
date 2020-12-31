@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:APPLICATION_NAME/models/APPLICATION_NAME_models.dart';
+import 'package:APPLICATION_NAME/models/game_models.dart';
 import 'package:APPLICATION_NAME/widgets/player_info.dart';
 
 class ScoreGridCard extends StatelessWidget {

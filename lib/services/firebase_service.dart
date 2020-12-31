@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:APPLICATION_NAME/models/APPLICATION_NAME_models.dart';
+import 'package:APPLICATION_NAME/models/game_models.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
 class FirebaseService {

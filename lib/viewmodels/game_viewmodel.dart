@@ -3,7 +3,7 @@ import 'package:APPLICATION_NAME/models/interface.dart';
 import 'package:APPLICATION_NAME/services/navigation_service.dart';
 import 'package:APPLICATION_NAME/utils/locator.dart';
 import 'package:APPLICATION_NAME/services/firebase_service.dart';
-import 'package:APPLICATION_NAME/models/APPLICATION_NAME_models.dart';
+import 'package:APPLICATION_NAME/models/game_models.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:APPLICATION_NAME/services/authentication_service.dart';
 import 'dart:async';

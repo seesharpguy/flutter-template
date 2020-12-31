@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 
-class JibeResult {
+class APPLICATION_NAMEResult {
   final dynamic data;
   final String exception;
 
   bool get hasError => data['message'] != null || this.exception != null;
   String get error => data['message'] + exception;
 
-  JibeResult({this.data, this.exception});
+  APPLICATION_NAMEResult({this.data, this.exception});
 }
 
 class Game {

@@ -1,4 +1,4 @@
-import 'APPLICATION_NAME_models.dart';
+import 'game_models.dart';
 
 abstract class IHavePlayers {
   List<Player> get players;

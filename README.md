@@ -19,6 +19,14 @@ samples, guidance on mobile development, and a full API reference.
 
 ## commands
 
+## rename template
+
+> replaces `APPLICATION_NAME` token with name specified in cli
+
+```js
+make rename
+```
+
 ## flutter clean and pub get
 
 ```js

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:progress_hud/progress_hud.dart';
 
 class Utils {
-  static Widget progressBar() {
+  static Widget progressBar({String message}) {
     return ProgressHUD(
       backgroundColor: Colors.black54,
       color: Colors.white,
       containerColor: Colors.black26,
       borderRadius: 5.0,
-      text: 'Please wait',
+      text: message ?? 'Please wait',
     );
   }
 

@@ -40,11 +40,12 @@ class ScoreGridCard extends StatelessWidget {
                         FormBuilderChoiceChip(
                           name: player.userId,
                           decoration: InputDecoration(
-                            labelText: 'Round Score',
                             border: InputBorder.none,
                           ),
-                          validator: FormBuilderValidators.compose(
-                              [FormBuilderValidators.required(context)]),
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(context,
+                                errorText: "score required")
+                          ]),
                           options: [
                             FormBuilderFieldOption(value: 0, child: Text('0')),
                             FormBuilderFieldOption(value: 2, child: Text('2')),

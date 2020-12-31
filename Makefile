@@ -18,6 +18,9 @@ list-keystore:
 bundle:
 	flutter build appbundle
 
+archive:
+	flutter build ipa
+
 apk:
 	flutter build apk --split-per-abi
 

@@ -15,12 +15,16 @@ class Game {
   final String createdBy;
   final GameStatus status;
   final int currentRound;
+  final String winnerDisplayName;
+  final String winnerAvatar;
 
   Game(
       {@required this.gameId,
       @required this.createdBy,
       @required this.status,
-      this.currentRound});
+      this.currentRound,
+      this.winnerDisplayName,
+      this.winnerAvatar});
 
   Map<String, dynamic> toMap() {
     return {
@@ -38,6 +42,8 @@ class Game {
         createdBy: map['createdBy'],
         gameId: documentId,
         currentRound: map['currentRound'],
+        winnerDisplayName: map['winnerDisplayName'],
+        winnerAvatar: map['winnerAvatar'],
         status: GameStatus.values.firstWhere(
             (element) => element.toString() == 'GameStatus.' + map['status']));
   }

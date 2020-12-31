@@ -57,6 +57,18 @@ class SignInViewModel extends BaseModel {
     }
   }
 
+  void loginAnonomously() async {
+    state = ViewState.Busy;
+    try {
+      await _auth.signInAnonomously();
+      state = ViewState.Idle;
+      clearAllModels();
+      _navigationService.navigateTo(RouteName.Home);
+    } catch (e) {
+      throw e;
+    }
+  }
+
   clearAllModels() {
     _userLoginAutoValidate = false;
     _passwordController = TextEditingController();

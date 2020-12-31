@@ -41,9 +41,9 @@ class AnswerForm extends StatelessWidget {
             onPressed: () async {
               _formKey.currentState.save();
               if (_formKey.currentState.validate()) {
+                Navigator.pop(context);
                 await gameViewModel
                     .takeTurn(_formKey.currentState.value['answer']);
-                Navigator.pop(context);
               }
             },
           ),

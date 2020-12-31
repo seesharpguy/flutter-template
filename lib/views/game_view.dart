@@ -6,6 +6,8 @@ import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jibe/base/base_view.dart';
+import 'package:jibe/utils/util.dart';
+import 'package:jibe/utils/view_state.dart';
 import 'package:jibe/viewmodels/game_viewmodel.dart';
 import 'package:jibe/models/jibe_models.dart';
 import 'package:jibe/widgets/jibe_game.dart';
@@ -44,16 +46,16 @@ class _JibeGameState extends State<JibeGame> {
           }
         }
       });
-    }, onModelDone: (model) {
-      model.unlisten();
     }, builder: (context, model, build) {
       return SafeArea(
         child: Scaffold(
-          appBar: AppBar(
-              automaticallyImplyLeading: false,
-              title: Center(child: Text('jibe game'))),
-          body: _buildBody(context, model),
-        ),
+            appBar: AppBar(
+                automaticallyImplyLeading: false,
+                title: Center(child: Text('jibe game'))),
+            body: Stack(children: <Widget>[
+              _buildBody(context, model),
+              model.state == ViewState.Busy ? Utils.progressBar() : Container()
+            ])),
       );
     });
   }
@@ -74,7 +76,7 @@ class _JibeGameState extends State<JibeGame> {
             )),
             FormBuilder(
                 key: _formKey,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
+                autovalidateMode: AutovalidateMode.disabled,
                 child: Expanded(
                   child: ScoreGridForm(
                       playerViewModel: viewModel,
@@ -83,16 +85,20 @@ class _JibeGameState extends State<JibeGame> {
                       isGameCreator: viewModel.isGameCreator),
                 )),
             viewModel.isGameCreator
-                ? FloatingIconButton(
-                    icon: FontAwesomeIcons.handPointRight,
-                    buttonColor: Colors.grey[900],
-                    onPressed: () async {
-                      _formKey.currentState.save();
-                      if (_formKey.currentState.validate()) {
-                        await viewModel.scoreTurn(_formKey.currentState.value);
-                        //Navigator.pop(context);
-                      }
-                    },
+                ? Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: RoundedButtonWithIcon(
+                        icon: FontAwesomeIcons.calculator,
+                        title: "Submit Scores".padLeft(40),
+                        buttonColor: Colors.grey[900],
+                        onPressed: () async {
+                          _formKey.currentState.save();
+                          if (_formKey.currentState.validate()) {
+                            await viewModel
+                                .scoreTurn(_formKey.currentState.value);
+                            //Navigator.pop(context);
+                          }
+                        }),
                   )
                 : Container()
           ],

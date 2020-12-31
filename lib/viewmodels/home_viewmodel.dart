@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:jibe/base/base_model.dart';
+import 'package:jibe/models/user.dart';
 import 'package:jibe/services/authentication_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:jibe/utils/locator.dart';
 import 'package:jibe/services/navigation_service.dart';
 import 'package:jibe/utils/routeNames.dart';
 import 'package:jibe/services/deeplink_service.dart';
 import 'package:jibe/services/firebase_service.dart';
+import 'package:jibe/utils/view_state.dart';
 
 class HomeViewModel extends BaseModel {
   final AuthenticationService _auth = locator<AuthenticationService>();
@@ -18,9 +19,9 @@ class HomeViewModel extends BaseModel {
   final StreamController<String> _toastController =
       StreamController<String>.broadcast();
 
-  User _currentUser;
+  JibeUser _currentUser;
 
-  User get currentUser => _auth.currentUser;
+  JibeUser get currentUser => _auth.currentUser;
   String get avatarUrl => _currentUser?.photoURL;
   String get displayName => _currentUser?.displayName;
 
@@ -50,7 +51,9 @@ class HomeViewModel extends BaseModel {
 
   Future<void> createGame() async {
     try {
-      var result = await _firebaseService.createGame();
+      state = ViewState.Busy;
+      var result = await _firebaseService.createGame(
+          _currentUser.displayName, _currentUser.photoURL);
       var data = result.data;
       if (data != null) {
         _navigationService.navigateTo(RouteName.Lobby,
@@ -60,6 +63,8 @@ class HomeViewModel extends BaseModel {
       _toastController.add(e.message);
     } catch (e) {
       _toastController.add("Error occurred creating game");
+    } finally {
+      state = ViewState.Idle;
     }
   }
 

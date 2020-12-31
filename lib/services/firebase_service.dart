@@ -20,10 +20,14 @@ class FirebaseService {
   final StreamController<List<Turn>> _turnController =
       StreamController<List<Turn>>.broadcast();
 
-  Future<HttpsCallableResult<dynamic>> createGame() async {
+  Future<HttpsCallableResult<dynamic>> createGame(
+      String displayName, String photoURL) async {
     var callable = await FirebaseFunctions.instance
         .httpsCallable('createGame', options: HttpsCallableOptions())
-        .call();
+        .call(<String, dynamic>{
+      "displayName": displayName,
+      "photoURL": photoURL
+    });
 
     return callable;
   }

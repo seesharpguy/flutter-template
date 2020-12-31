@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jibe/viewmodels/signin_viewmodel.dart';
 import 'package:jibe/base/base_view.dart';
 import 'package:jibe/splash.dart';
@@ -72,10 +73,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                           }),
                                     ),
                                     SizedBox(
-                                      height: 16,
+                                      height: 10,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: RoundedButtonWithIcon(
+                                        icon: FontAwesomeIcons.userSecret,
+                                        title: "Play Without Login".padLeft(35),
+                                        buttonColor: Colors.grey[900],
+                                        onPressed: () {
+                                          model.loginAnonomously();
+                                        },
+                                      ),
                                     ),
                                     SizedBox(
-                                      height: 16,
+                                      height: 10,
                                     ),
                                   ],
                                 ),

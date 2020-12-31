@@ -1,23 +1,20 @@
 class JibeUser {
-  final String id;
-  final String fullName;
-  final String email;
-  final String userRole;
+  final String uid;
+  final String displayName;
+  final String photoURL;
 
-  JibeUser({this.id, this.fullName, this.email, this.userRole});
+  JibeUser({this.uid, this.displayName, this.photoURL});
 
-  JibeUser.fromData(Map<String, dynamic> data)
-      : id = data['id'],
-        fullName = data['fullName'],
-        email = data['email'],
-        userRole = data['userRole'];
+  Map<String, dynamic> toMap() {
+    return {'uid': uid, 'displayName': displayName, 'photoURL': photoURL};
+  }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'fullName': fullName,
-      'email': email,
-      'userRole': userRole,
-    };
+  static JibeUser fromMap(Map<String, dynamic> map) {
+    if (map == null) return null;
+
+    return JibeUser(
+        displayName: map['displayName'],
+        uid: map['uid'],
+        photoURL: map['photoURL']);
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jibe/base/base_view.dart';
+import 'package:jibe/utils/util.dart';
+import 'package:jibe/utils/view_state.dart';
 import 'package:jibe/viewmodels/home_viewmodel.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
@@ -30,80 +32,83 @@ class _HomeScreenState extends State<HomeScreen> {
       return SafeArea(
         child: Scaffold(
           resizeToAvoidBottomInset: false,
-          body: Container(
-            child: Padding(
-              padding: const EdgeInsets.all(48.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Center(
-                    child: Text(
-                      'Hello ${model.displayName}',
-                      style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black54),
+          body: Stack(children: <Widget>[
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.all(48.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Center(
+                      child: Text(
+                        'Hello ${model.displayName}',
+                        style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black54),
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: AvatarGlow(
-                      glowColor: Colors.grey[800],
-                      endRadius: 150.0,
-                      duration: Duration(milliseconds: 2000),
-                      repeat: true,
-                      showTwoGlows: true,
-                      repeatPauseDuration: Duration(milliseconds: 100),
-                      child: Material(
-                        elevation: 8.0,
-                        shape: CircleBorder(),
-                        child: CircleAvatar(
-                          backgroundColor: Colors.grey[100],
-                          backgroundImage: model.avatarUrl != null
-                              ? NetworkImage(
-                                  model.avatarUrl,
-                                )
-                              : null,
-                          radius: 60.0,
+                    Expanded(
+                      child: AvatarGlow(
+                        glowColor: Colors.grey[800],
+                        endRadius: 150.0,
+                        duration: Duration(milliseconds: 2000),
+                        repeat: true,
+                        showTwoGlows: true,
+                        repeatPauseDuration: Duration(milliseconds: 100),
+                        child: Material(
+                          elevation: 8.0,
+                          shape: CircleBorder(),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.grey[100],
+                            backgroundImage: model.avatarUrl != null
+                                ? NetworkImage(
+                                    model.avatarUrl,
+                                  )
+                                : null,
+                            radius: 60.0,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  RoundedButtonWithIcon(
-                    icon: FontAwesomeIcons.playCircle,
-                    title: "Start New Game".padLeft(35),
-                    buttonColor: Colors.grey[900],
-                    onPressed: () {
-                      model.createGame();
-                    },
-                  ),
-                  SizedBox(height: 10),
-                  RoundedButtonWithIcon(
-                    icon: FontAwesomeIcons.userPlus,
-                    title: "Join Existing Game".padLeft(35),
-                    buttonColor: Colors.grey[900],
-                    onPressed: () {
-                      showDialog(
-                          useSafeArea: true,
-                          child: new Dialog(
-                              clipBehavior: Clip.hardEdge,
-                              child: _gameIdForm(context, model)),
-                          context: context);
-                    },
-                  ),
-                  SizedBox(height: 10),
-                  RoundedButtonWithIcon(
-                    icon: FontAwesomeIcons.signOutAlt,
-                    title: "Log Out".padLeft(35),
-                    buttonColor: Colors.grey[900],
-                    onPressed: () {
-                      model.logout();
-                    },
-                  ),
-                ],
+                    SizedBox(height: 10),
+                    RoundedButtonWithIcon(
+                      icon: FontAwesomeIcons.playCircle,
+                      title: "Start New Game".padLeft(35),
+                      buttonColor: Colors.grey[900],
+                      onPressed: () {
+                        model.createGame();
+                      },
+                    ),
+                    SizedBox(height: 10),
+                    RoundedButtonWithIcon(
+                      icon: FontAwesomeIcons.userPlus,
+                      title: "Join Existing Game".padLeft(35),
+                      buttonColor: Colors.grey[900],
+                      onPressed: () {
+                        showDialog(
+                            useSafeArea: true,
+                            child: new Dialog(
+                                clipBehavior: Clip.hardEdge,
+                                child: _gameIdForm(context, model)),
+                            context: context);
+                      },
+                    ),
+                    SizedBox(height: 10),
+                    RoundedButtonWithIcon(
+                      icon: FontAwesomeIcons.signOutAlt,
+                      title: "Log Out".padLeft(35),
+                      buttonColor: Colors.grey[900],
+                      onPressed: () {
+                        model.logout();
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
+            model.state == ViewState.Busy ? Utils.progressBar() : Container()
+          ]),
         ),
       );
     });

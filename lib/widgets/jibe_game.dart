@@ -71,7 +71,7 @@ class JibeGameView extends StatelessWidget {
               child: RoundedButtonWithIcon(
                 icon: FontAwesomeIcons.chalkboardTeacher,
                 title: viewModel.canSubmit
-                    ? "Submit My Answer".padLeft(40)
+                    ? "Submit Answer".padLeft(40)
                     : "Submitted".padLeft(40),
                 buttonColor:
                     viewModel.canSubmit ? Colors.grey[900] : Colors.grey[500],

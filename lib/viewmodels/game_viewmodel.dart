@@ -1,5 +1,6 @@
 import 'package:jibe/base/base_model.dart';
 import 'package:jibe/models/interface.dart';
+import 'package:jibe/services/navigation_service.dart';
 import 'package:jibe/utils/locator.dart';
 import 'package:jibe/services/firebase_service.dart';
 import 'package:jibe/models/jibe_models.dart';
@@ -7,14 +8,26 @@ import 'package:cloud_functions/cloud_functions.dart';
 import 'package:jibe/services/authentication_service.dart';
 import 'dart:async';
 
+import 'package:jibe/utils/routeNames.dart';
+import 'package:jibe/utils/view_state.dart';
+
 class GameViewModel extends BaseModel
     implements IHaveGame, IHavePlayers, IHaveTurns {
-  // final NavigationService _navigationService = locator<NavigationService>();
+  final NavigationService _navigationService = locator<NavigationService>();
   final AuthenticationService _auth = locator<AuthenticationService>();
   final FirebaseService _firebaseService = locator<FirebaseService>();
 
   final StreamController<RoundStatus> _roundController =
       StreamController<RoundStatus>.broadcast();
+
+  final StreamController<String> _toastController =
+      StreamController<String>.broadcast();
+
+  GameStatus _previousStaus = GameStatus.Unknown;
+
+  Stream<String> toasts() {
+    return _toastController.stream;
+  }
 
   List<Player> _players;
   List<Player> get players => _players;
@@ -23,6 +36,7 @@ class GameViewModel extends BaseModel
   String get gameId => _gameId;
   set gameId(String gameId) {
     _gameId = gameId;
+
     notifyListeners();
   }
 
@@ -30,7 +44,16 @@ class GameViewModel extends BaseModel
   Game get game => _game;
   set game(Game game) {
     _game = game;
-    notifyListeners();
+    print("got game");
+    if (game.status != _previousStaus) {
+      _previousStaus = game.status;
+      print("${game.status}");
+      if (game.status == GameStatus.Completed) {
+        _navigationService.navigateTo(RouteName.Winner, arguments: _gameId);
+      } else {
+        notifyListeners();
+      }
+    }
   }
 
   Round _currentRound;
@@ -58,7 +81,6 @@ class GameViewModel extends BaseModel
 
   void listenToGame() {
     _firebaseService.gameListener(gameId).listen((gameData) {
-      print("got game");
       if (gameData != null) {
         game = gameData;
         listenToRound();
@@ -77,8 +99,6 @@ class GameViewModel extends BaseModel
   }
 
   void listenToRound() {
-    print("listening to round ${game.currentRound}");
-
     _firebaseService
         .roundListener(gameId, game.currentRound.toString())
         .listen((roundData) {
@@ -86,9 +106,6 @@ class GameViewModel extends BaseModel
         RoundStatus prevStatus = currentRound != null
             ? currentRound.status ?? RoundStatus.Unknown
             : RoundStatus.Unknown;
-
-        print("prevStatus: $prevStatus");
-        print("currentStatus: ${roundData.status}");
 
         currentRound = roundData;
         listenForTurns();
@@ -119,33 +136,29 @@ class GameViewModel extends BaseModel
 
   Future<void> takeTurn(String answer) async {
     try {
+      state = ViewState.Busy;
       await _firebaseService.takeTurn(
           gameId, game.currentRound.toString(), answer);
     } on FirebaseFunctionsException catch (e) {
-      // _toastController.add(e.message);
+      _toastController.add(e.message);
     } catch (e) {
-      // _toastController.add("Error occurred joining game");
+      _toastController.add("Error occurred taking turn");
+    } finally {
+      state = ViewState.Idle;
     }
   }
 
   Future<void> scoreTurn(Map<String, dynamic> answers) async {
     try {
+      state = ViewState.Busy;
       await _firebaseService.scoreTurn(
           gameId, game.currentRound.toString(), answers);
     } on FirebaseFunctionsException catch (e) {
-      // _toastController.add(e.message);
+      _toastController.add(e.message);
     } catch (e) {
-      // _toastController.add("Error occurred joining game");
-    }
-  }
-
-  void unlisten() {
-    if (_firebaseService.gameController().hasListener) {
-      _firebaseService.gameController().close();
-    }
-
-    if (_firebaseService.playerController().hasListener) {
-      _firebaseService.playerController().close();
+      _toastController.add("Error occurred scoring round");
+    } finally {
+      state = ViewState.Idle;
     }
   }
 }

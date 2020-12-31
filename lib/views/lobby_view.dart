@@ -72,7 +72,7 @@ class _LobbyState extends State<Lobby> {
                 title: "Invite Others".padLeft(45),
                 buttonColor: Colors.grey[900],
                 onPressed: () async {
-                  await Share.share('''Please join my jibe game ${widget.gameId}
+                  await Share.share('''Please join my game ${widget.gameId}
                   
                   You can join easily by clicking the following link:
                   

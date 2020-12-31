@@ -23,7 +23,7 @@ class AnswerForm extends StatelessWidget {
                 child: FormBuilderTextField(
                   name: 'answer',
                   decoration: InputDecoration(
-                    labelText: 'Enter you jibe answer',
+                    labelText: 'Enter your answer',
                   ),
                   // valueTransformer: (text) => num.tryParse(text),
                   validator: FormBuilderValidators.compose([

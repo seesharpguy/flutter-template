@@ -127,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: FormBuilderTextField(
                   name: 'gameId',
                   decoration: InputDecoration(
-                    labelText: 'Enter jibe game id.',
+                    labelText: 'Enter game id.',
                   ),
                   // valueTransformer: (text) => num.tryParse(text),
                   validator: FormBuilderValidators.compose([

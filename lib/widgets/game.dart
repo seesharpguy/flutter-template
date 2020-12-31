@@ -7,8 +7,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:APPLICATION_NAME/widgets/answer_form.dart';
 import 'package:APPLICATION_NAME/widgets/player_listview.dart';
 
-class JibeGameView extends StatelessWidget {
-  JibeGameView({
+class GameView extends StatelessWidget {
+  GameView({
     this.viewModel,
   });
   final GameViewModel viewModel;

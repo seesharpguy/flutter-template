@@ -50,7 +50,7 @@ class _APPLICATION_NAMEGameState extends State<APPLICATION_NAMEGame> {
         child: Scaffold(
             appBar: AppBar(
                 automaticallyImplyLeading: false,
-                title: Center(child: Text('jibe game'))),
+                title: Center(child: Text('APPLICATION_NAME game'))),
             body: Stack(children: <Widget>[
               _buildBody(context, model),
               model.state == ViewState.Busy ? Utils.progressBar() : Container()
@@ -64,7 +64,7 @@ class _APPLICATION_NAMEGameState extends State<APPLICATION_NAMEGame> {
         key: cardKey,
         direction: FlipDirection.HORIZONTAL,
         flipOnTouch: false,
-        front: JibeGameView(viewModel: viewModel),
+        front: GameView(viewModel: viewModel),
         back: Column(
           children: [
             Center(

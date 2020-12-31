@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:jibe/views/home_view.dart';
-import 'package:jibe/views/login_view.dart';
-import 'package:jibe/views/lobby_view.dart';
-import 'package:jibe/splash.dart';
-import 'package:jibe/utils/routeNames.dart';
-import 'package:jibe/views/game_view.dart';
-import 'package:jibe/views/winner_view.dart';
+import 'package:APPLICATION_NAME/views/home_view.dart';
+import 'package:APPLICATION_NAME/views/login_view.dart';
+import 'package:APPLICATION_NAME/views/lobby_view.dart';
+import 'package:APPLICATION_NAME/splash.dart';
+import 'package:APPLICATION_NAME/utils/routeNames.dart';
+import 'package:APPLICATION_NAME/views/game_view.dart';
+import 'package:APPLICATION_NAME/views/winner_view.dart';
 
 class Routes {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -19,9 +19,10 @@ class Routes {
       case RouteName.Lobby:
         var gameId = settings.arguments as String;
         return MaterialPageRoute(builder: (_) => Lobby(gameId: gameId));
-      case RouteName.JibeGame:
+      case RouteName.Game:
         var gameId = settings.arguments as String;
-        return MaterialPageRoute(builder: (_) => JibeGame(gameId: gameId));
+        return MaterialPageRoute(
+            builder: (_) => APPLICATION_NAMEGame(gameId: gameId));
       case RouteName.Winner:
         var gameId = settings.arguments as String;
         return MaterialPageRoute(builder: (_) => WinnerScreen(gameId: gameId));

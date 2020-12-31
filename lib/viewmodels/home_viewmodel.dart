@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:jibe/base/base_model.dart';
-import 'package:jibe/models/user.dart';
-import 'package:jibe/services/authentication_service.dart';
-import 'package:jibe/utils/locator.dart';
-import 'package:jibe/services/navigation_service.dart';
-import 'package:jibe/utils/routeNames.dart';
-import 'package:jibe/services/deeplink_service.dart';
-import 'package:jibe/services/firebase_service.dart';
-import 'package:jibe/utils/view_state.dart';
+import 'package:APPLICATION_NAME/base/base_model.dart';
+import 'package:APPLICATION_NAME/models/user.dart';
+import 'package:APPLICATION_NAME/services/authentication_service.dart';
+import 'package:APPLICATION_NAME/utils/locator.dart';
+import 'package:APPLICATION_NAME/services/navigation_service.dart';
+import 'package:APPLICATION_NAME/utils/routeNames.dart';
+import 'package:APPLICATION_NAME/services/deeplink_service.dart';
+import 'package:APPLICATION_NAME/services/firebase_service.dart';
+import 'package:APPLICATION_NAME/utils/view_state.dart';
 
 class HomeViewModel extends BaseModel {
   final AuthenticationService _auth = locator<AuthenticationService>();
@@ -19,9 +19,9 @@ class HomeViewModel extends BaseModel {
   final StreamController<String> _toastController =
       StreamController<String>.broadcast();
 
-  JibeUser _currentUser;
+  Grateful8User _currentUser;
 
-  JibeUser get currentUser => _auth.currentUser;
+  Grateful8User get currentUser => _auth.currentUser;
   String get avatarUrl => _currentUser?.photoURL;
   String get displayName => _currentUser?.displayName;
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:jibe/base/base_model.dart';
-import 'package:jibe/services/authentication_service.dart';
-import 'package:jibe/utils/view_state.dart';
-import 'package:jibe/services/navigation_service.dart';
-import 'package:jibe/utils/routeNames.dart';
-import 'package:jibe/utils/locator.dart';
+import 'package:APPLICATION_NAME/base/base_model.dart';
+import 'package:APPLICATION_NAME/services/authentication_service.dart';
+import 'package:APPLICATION_NAME/utils/view_state.dart';
+import 'package:APPLICATION_NAME/services/navigation_service.dart';
+import 'package:APPLICATION_NAME/utils/routeNames.dart';
+import 'package:APPLICATION_NAME/utils/locator.dart';
 
 class SignInViewModel extends BaseModel {
   final AuthenticationService _auth = locator<AuthenticationService>();

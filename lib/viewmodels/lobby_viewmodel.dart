@@ -1,15 +1,15 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:jibe/base/base_model.dart';
-import 'package:jibe/models/interface.dart';
-import 'package:jibe/utils/locator.dart';
-import 'package:jibe/services/firebase_service.dart';
-import 'package:jibe/utils/view_state.dart';
-import 'package:jibe/models/jibe_models.dart';
-import 'package:jibe/services/authentication_service.dart';
-import 'package:jibe/services/navigation_service.dart';
-import 'package:jibe/utils/routeNames.dart';
+import 'package:APPLICATION_NAME/base/base_model.dart';
+import 'package:APPLICATION_NAME/models/interface.dart';
+import 'package:APPLICATION_NAME/utils/locator.dart';
+import 'package:APPLICATION_NAME/services/firebase_service.dart';
+import 'package:APPLICATION_NAME/utils/view_state.dart';
+import 'package:APPLICATION_NAME/models/APPLICATION_NAME_models.dart';
+import 'package:APPLICATION_NAME/services/authentication_service.dart';
+import 'package:APPLICATION_NAME/services/navigation_service.dart';
+import 'package:APPLICATION_NAME/utils/routeNames.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
 class LobbyViewModel extends BaseModel implements IHavePlayers, IHaveGame {
@@ -39,7 +39,7 @@ class LobbyViewModel extends BaseModel implements IHavePlayers, IHaveGame {
     if (game.status != _previousStaus) {
       _previousStaus = game.status;
       if (game.status == GameStatus.Started) {
-        _navigationService.navigateTo(RouteName.JibeGame, arguments: _gameId);
+        _navigationService.navigateTo(RouteName.Game, arguments: _gameId);
       } else {
         notifyListeners();
       }
@@ -60,16 +60,6 @@ class LobbyViewModel extends BaseModel implements IHavePlayers, IHaveGame {
     _firebaseService.gameListener(gameId).listen((gameData) {
       if (gameData != null) {
         game = gameData;
-      }
-    });
-  }
-
-  void listenForPlayers() {
-    _firebaseService.playerListener(_gameId).listen((playerData) {
-      List<Player> updatedPlayers = playerData;
-      if (updatedPlayers != null) {
-        _players = updatedPlayers;
-        notifyListeners();
       }
     });
   }

@@ -4,13 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:jibe/viewmodels/home_viewmodel.dart';
-import 'package:jibe/viewmodels/signin_viewmodel.dart';
-import 'package:jibe/services/navigation_service.dart';
+import 'package:APPLICATION_NAME/viewmodels/home_viewmodel.dart';
+import 'package:APPLICATION_NAME/viewmodels/signin_viewmodel.dart';
+import 'package:APPLICATION_NAME/services/navigation_service.dart';
 import 'package:get_it/get_it.dart';
-import 'package:jibe/utils/locator.dart';
-import 'package:jibe/utils/prefer.dart';
-import 'package:jibe/utils/routes.dart';
+import 'package:APPLICATION_NAME/utils/locator.dart';
+import 'package:APPLICATION_NAME/utils/prefer.dart';
+import 'package:APPLICATION_NAME/utils/routes.dart';
 import 'package:provider/provider.dart';
 import 'dart:io' show Platform, exit;
 
@@ -46,7 +46,7 @@ void main() async {
   };
 
   runApp(MultiProvider(
-    child: JibeApp(),
+    child: Grateful8App(),
     providers: [
       ChangeNotifierProvider<HomeViewModel>(
         create: (_) => HomeViewModel(),
@@ -55,12 +55,12 @@ void main() async {
   ));
 }
 
-class JibeApp extends StatefulWidget {
+class Grateful8App extends StatefulWidget {
   @override
-  _JibeAppState createState() => _JibeAppState();
+  _Grateful8AppState createState() => _Grateful8AppState();
 }
 
-class _JibeAppState extends State<JibeApp> {
+class _Grateful8AppState extends State<Grateful8App> {
   Locale locale;
   bool localeLoaded = false;
 

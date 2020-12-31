@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:jibe/models/jibe_models.dart';
-import 'package:jibe/widgets/player_info.dart';
+import 'package:APPLICATION_NAME/models/APPLICATION_NAME_models.dart';
+import 'package:APPLICATION_NAME/widgets/player_info.dart';
 
 class ScoreGridCard extends StatelessWidget {
   const ScoreGridCard(

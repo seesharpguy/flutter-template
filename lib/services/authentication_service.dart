@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:jibe/models/user.dart';
+import 'package:APPLICATION_NAME/models/user.dart';
 import 'package:faker/faker.dart';
 
 class AuthenticationService {
@@ -8,29 +8,29 @@ class AuthenticationService {
   // final FirestoreService _firestoreService = locator<FirestoreService>();
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  JibeUser _currentUser;
-  JibeUser get currentUser => getJibeUser();
+  Grateful8User _currentUser;
+  Grateful8User get currentUser => getGrateful8User();
 
-  JibeUser getJibeUser() {
+  Grateful8User getGrateful8User() {
     var user = _firebaseAuth.currentUser;
     if (user != null) {
-      setJibeUser(user);
+      setGrateful8User(user);
       return _currentUser;
     } else {
       return null;
     }
   }
 
-  void setJibeUser(User user) {
+  void setGrateful8User(User user) {
     if (user.isAnonymous) {
       var faker = new Faker();
 
-      _currentUser = JibeUser(
+      _currentUser = Grateful8User(
           displayName: faker.internet.userName(),
           uid: user.uid,
           photoURL: "https://robohash.org/${user.uid}");
     } else {
-      _currentUser = JibeUser(
+      _currentUser = Grateful8User(
           displayName: user.displayName,
           uid: user.uid,
           photoURL: user.photoURL);
@@ -61,7 +61,7 @@ class AuthenticationService {
 
     assert(_user.uid == fbUser.uid);
 
-    setJibeUser(fbUser);
+    setGrateful8User(fbUser);
   }
 
   Future signInAnonomously() async {
@@ -77,7 +77,7 @@ class AuthenticationService {
 
     assert(_user.uid == fbUser.uid);
 
-    setJibeUser(fbUser);
+    setGrateful8User(fbUser);
   }
 
   Future<bool> logout() async {

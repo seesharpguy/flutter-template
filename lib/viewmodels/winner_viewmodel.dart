@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'package:jibe/base/base_model.dart';
-import 'package:jibe/models/jibe_models.dart';
-import 'package:jibe/utils/locator.dart';
-import 'package:jibe/services/navigation_service.dart';
-import 'package:jibe/utils/routeNames.dart';
-import 'package:jibe/services/firebase_service.dart';
+import 'package:APPLICATION_NAME/base/base_model.dart';
+import 'package:APPLICATION_NAME/models/APPLICATION_NAME_models.dart';
+import 'package:APPLICATION_NAME/utils/locator.dart';
+import 'package:APPLICATION_NAME/services/navigation_service.dart';
+import 'package:APPLICATION_NAME/utils/routeNames.dart';
+import 'package:APPLICATION_NAME/services/firebase_service.dart';
 
 class WinnerViewModel extends BaseModel {
   final NavigationService _navigationService = locator<NavigationService>();

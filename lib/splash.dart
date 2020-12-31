@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:jibe/viewmodels/signin_viewmodel.dart';
-import 'package:jibe/utils/deviceSize.dart';
-import 'package:jibe/services/authentication_service.dart';
-import 'package:jibe/views/login_view.dart';
-import 'package:jibe/views/home_view.dart';
+import 'package:APPLICATION_NAME/viewmodels/signin_viewmodel.dart';
+import 'package:APPLICATION_NAME/utils/deviceSize.dart';
+import 'package:APPLICATION_NAME/services/authentication_service.dart';
+import 'package:APPLICATION_NAME/views/login_view.dart';
+import 'package:APPLICATION_NAME/views/home_view.dart';
 import 'package:provider/provider.dart';
-import 'package:jibe/utils/locator.dart';
+import 'package:APPLICATION_NAME/utils/locator.dart';
 
 class Splash extends StatefulWidget {
   @override

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:jibe/base/base_view.dart';
-import 'package:jibe/utils/util.dart';
-import 'package:jibe/utils/view_state.dart';
-import 'package:jibe/viewmodels/lobby_viewmodel.dart';
+import 'package:APPLICATION_NAME/base/base_view.dart';
+import 'package:APPLICATION_NAME/utils/util.dart';
+import 'package:APPLICATION_NAME/utils/view_state.dart';
+import 'package:APPLICATION_NAME/viewmodels/lobby_viewmodel.dart';
 import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:jibe/widgets/lobby_player_gridview.dart';
+import 'package:APPLICATION_NAME/widgets/lobby_player_gridview.dart';
 import 'package:share/share.dart';
 import 'package:toast/toast.dart';
 
@@ -27,7 +27,6 @@ class _LobbyState extends State<Lobby> {
     return BaseView<LobbyViewModel>(onModelReady: (model) {
       model.gameId = widget.gameId;
       model.listenToGame();
-      model.listenForPlayers();
       model.toasts().listen((String event) {
         Toast.show(event, context,
             gravity: Toast.BOTTOM,

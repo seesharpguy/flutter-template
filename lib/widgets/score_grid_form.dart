@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jibe/models/interface.dart';
-import 'package:jibe/widgets/score_grid_card.dart';
+import 'package:APPLICATION_NAME/models/interface.dart';
+import 'package:APPLICATION_NAME/widgets/score_grid_card.dart';
 
 class ScoreGridForm extends StatelessWidget {
   ScoreGridForm(

@@ -1,4 +1,4 @@
-import 'jibe_models.dart';
+import 'APPLICATION_NAME_models.dart';
 
 abstract class IHavePlayers {
   List<Player> get players;

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:jibe/viewmodels/game_viewmodel.dart';
+import 'package:APPLICATION_NAME/viewmodels/game_viewmodel.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:jibe/widgets/answer_form.dart';
-import 'package:jibe/widgets/player_listview.dart';
+import 'package:APPLICATION_NAME/widgets/answer_form.dart';
+import 'package:APPLICATION_NAME/widgets/player_listview.dart';
 
 class JibeGameView extends StatelessWidget {
   JibeGameView({

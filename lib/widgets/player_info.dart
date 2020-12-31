@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
-import 'package:jibe/models/jibe_models.dart';
+import 'package:APPLICATION_NAME/models/APPLICATION_NAME_models.dart';
 
 class PlayerInfo extends StatelessWidget {
   const PlayerInfo({this.player, this.game, this.turns, this.index});

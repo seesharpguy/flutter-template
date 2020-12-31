@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:jibe/base/base_view.dart';
-import 'package:jibe/utils/util.dart';
-import 'package:jibe/utils/view_state.dart';
+import 'package:APPLICATION_NAME/base/base_view.dart';
+import 'package:APPLICATION_NAME/utils/util.dart';
+import 'package:APPLICATION_NAME/utils/view_state.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:jibe/viewmodels/winner_viewmodel.dart';
+import 'package:APPLICATION_NAME/viewmodels/winner_viewmodel.dart';
 import 'package:toast/toast.dart';
 
 class WinnerScreen extends StatefulWidget {

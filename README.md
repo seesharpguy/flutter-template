@@ -1,4 +1,4 @@
-# jibe
+# flutter template
 
 A new Flutter project.
 
@@ -23,48 +23,60 @@ samples, guidance on mobile development, and a full API reference.
 make clean
 ```
 
-## upgrade dependencies
+## upgrade flutter dependencies
 
-```node
+```js
 make upgrade
 ```
 
 ## generate icons
 
-```node
+> make platform icons (ios & android) from `./assets/launcher.png`
+
+```js
 make icon
 ```
 
-## generate keystore
+## production keystore operations (android)
 
-```node
+> list keystores
+
+```js
+make list-keystore
+```
+
+> make new kestore (.jks) file located at `~/APPLICATION_NAMEkey.jks`
+
+```js
 make keystore
 ```
 
 ## generate bundle
 
-```node
+> create app bundle for distribution to android playstore
+
+```js
 make bundle
 ```
 
 ## generate apk
 
-```node
+> create .apk for local installation to android device
+
+```js
 make apk
 ```
 
 ## debug apk
 
+> debug running application on connected android device
+
 ```node
 adb -d logcat
 ```
 
-Images
-
-<!-- <span>Photo by <a href="https://unsplash.com/@enginakyurt?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">engin akyurt</a> on <a href="https://unsplash.com/s/photos/thumbs-up?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span> -->
-
-## test with link
+## test deep link
 
 ```node
-adb shell 'am start -W -a android.intent.action.VIEW -c android.intent.category.BROWSABLE -d "grateful8games://jibe/game/join?gameId=ABCDEF11"'
+adb shell 'am start -W -a android.intent.action.VIEW -c android.intent.category.BROWSABLE -d "grateful8games://APPLICATION_NAME/game/join?gameId=ABCDEF11"'
 ```

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jibe/viewmodels/game_viewmodel.dart';
+import 'package:APPLICATION_NAME/viewmodels/game_viewmodel.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

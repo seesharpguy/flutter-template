@@ -5,26 +5,26 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:jibe/base/base_view.dart';
-import 'package:jibe/utils/util.dart';
-import 'package:jibe/utils/view_state.dart';
-import 'package:jibe/viewmodels/game_viewmodel.dart';
-import 'package:jibe/models/jibe_models.dart';
-import 'package:jibe/widgets/jibe_game.dart';
-import 'package:jibe/widgets/score_grid_form.dart';
+import 'package:APPLICATION_NAME/base/base_view.dart';
+import 'package:APPLICATION_NAME/utils/util.dart';
+import 'package:APPLICATION_NAME/utils/view_state.dart';
+import 'package:APPLICATION_NAME/viewmodels/game_viewmodel.dart';
+import 'package:APPLICATION_NAME/models/APPLICATION_NAME_models.dart';
+import 'package:APPLICATION_NAME/widgets/game.dart';
+import 'package:APPLICATION_NAME/widgets/score_grid_form.dart';
 
-class JibeGame extends StatefulWidget {
+class APPLICATION_NAMEGame extends StatefulWidget {
   final String gameId;
 
-  const JibeGame({Key key, this.gameId}) : super(key: key);
+  const APPLICATION_NAMEGame({Key key, this.gameId}) : super(key: key);
 
   @override
-  _JibeGameState createState() {
-    return _JibeGameState();
+  _APPLICATION_NAMEGameState createState() {
+    return _APPLICATION_NAMEGameState();
   }
 }
 
-class _JibeGameState extends State<JibeGame> {
+class _APPLICATION_NAMEGameState extends State<APPLICATION_NAMEGame> {
   final cardKey = GlobalKey<FlipCardState>();
   final _formKey = GlobalKey<FormBuilderState>();
 
@@ -33,7 +33,6 @@ class _JibeGameState extends State<JibeGame> {
     return BaseView<GameViewModel>(onModelReady: (model) {
       model.gameId = widget.gameId;
       model.listenToGame();
-      model.listenForPlayers();
       model.roundStatus().listen((event) {
         print("round status changed $event");
         if (event == RoundStatus.Started) {

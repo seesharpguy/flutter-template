@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jibe/models/jibe_models.dart';
+import 'package:APPLICATION_NAME/models/APPLICATION_NAME_models.dart';
 import 'package:avatar_glow/avatar_glow.dart';
-import 'package:jibe/viewmodels/game_viewmodel.dart';
+import 'package:APPLICATION_NAME/viewmodels/game_viewmodel.dart';
 
 class PlayerListView extends StatelessWidget {
   PlayerListView({this.viewModel});
